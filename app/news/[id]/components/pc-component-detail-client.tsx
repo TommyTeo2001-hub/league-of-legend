@@ -1,0 +1,254 @@
+"use client"
+
+import { useState, useEffect } from 'react'
+import Image from 'next/image'
+import Link from 'next/link'
+import { ArrowLeft, MessageSquare, Share2, ThumbsUp } from 'lucide-react'
+import { Badge } from '@/components/ui/badge'
+import { Button } from '@/components/ui/button'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import CommentsSection from './comments-section'
+import { fetchPCComponentById, fetchPCComponents } from '@/lib/api'
+
+type Author = {
+  name: string;
+  image: string;
+}
+
+type Article = {
+  id: string;
+  title: string;
+  excerpt: string;
+  content: string;
+  image: string;
+  category: string;
+  author: Author;
+  date: string;
+}
+
+export default function PCComponentDetailClient({ id }: { id: string }) {
+  const [article, setArticle] = useState<Article | null>(null)
+  const [relatedArticles, setRelatedArticles] = useState<Article[]>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<Error | null>(null)
+
+  useEffect(() => {
+    const loadArticle = async () => {
+      try {
+        setLoading(true)
+        const data = await fetchPCComponentById(id)
+        setArticle(data)
+        
+        // Lấy các bài viết liên quan
+        const allArticles = await fetchPCComponents()
+        const related = allArticles
+          .filter((a: Article) => a.id !== id)
+          .slice(0, 3)
+        setRelatedArticles(related)
+      } catch (err) {
+        console.error('Lỗi khi tải dữ liệu bài viết:', err)
+        setError(err as Error)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    loadArticle()
+  }, [id])
+
+  if (loading) {
+    return (
+      <div className="container mx-auto px-4 py-8">
+        <div className="bg-[#121214] border border-[#2a2a30] rounded-xl p-8 text-center">
+          <h2 className="text-2xl font-bold text-white mb-4">Đang tải...</h2>
+          <p className="text-gray-300">Vui lòng đợi trong giây lát</p>
+        </div>
+      </div>
+    )
+  }
+
+  if (error) {
+    return (
+      <div className="container mx-auto px-4 py-8">
+        <div className="bg-red-800/20 border border-red-500 rounded-xl p-8 text-center">
+          <h2 className="text-2xl font-bold text-white mb-4">Lỗi khi tải dữ liệu</h2>
+          <p className="text-gray-300 mb-4">
+            Không thể tải thông tin bài viết. Vui lòng thử lại sau.
+          </p>
+          <div className="text-sm text-gray-400 font-mono bg-black/30 p-4 rounded-lg text-left">
+            {error.message}
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  if (!article) {
+    return (
+      <div className="container mx-auto px-4 py-8">
+        <div className="bg-[#121214] border border-[#2a2a30] rounded-xl p-8 text-center">
+          <h2 className="text-2xl font-bold text-white mb-4">Không tìm thấy bài viết</h2>
+          <p className="text-gray-300 mb-4">
+            Bài viết bạn đang tìm kiếm không tồn tại hoặc đã bị xóa.
+          </p>
+          <Link 
+            href="/pc-components"
+            className="inline-flex items-center gap-2 text-blue-400 hover:underline"
+          >
+            <ArrowLeft className="h-4 w-4" />
+            Quay lại trang chủ
+          </Link>
+        </div>
+      </div>
+    )
+  }
+
+  // Fake data cho tương tác và comments
+  const engagementData = {
+    likes: 245,
+    shares: 89
+  }
+
+  return (
+    <div className="container mx-auto px-4 py-8">
+      {/* Back Button */}
+      <Link 
+        href="/pc-components"
+        className="inline-flex items-center gap-2 text-gray-400 hover:text-white mb-6 transition-colors"
+      >
+        <ArrowLeft className="h-4 w-4" />
+        Quay lại danh sách bài viết
+      </Link>
+
+      {/* Article Header */}
+      <div className="relative h-[400px] rounded-xl overflow-hidden mb-8">
+        <Image
+          src={article.image}
+          alt={article.title}
+          fill
+          className="object-cover"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#121214] to-transparent" />
+        <div className="absolute bottom-0 left-0 p-8">
+          <Badge className="bg-blue-600 mb-4">{article.category}</Badge>
+          <h1 className="text-4xl font-bold mb-4">{article.title}</h1>
+          <p className="text-gray-300 mb-4 max-w-2xl">{article.excerpt}</p>
+          <div className="flex items-center gap-4">
+            <div className="flex items-center gap-3">
+              <Avatar>
+                <AvatarImage src={article.author.image} />
+                <AvatarFallback>{article.author.name[0]}</AvatarFallback>
+              </Avatar>
+              <div>
+                <div className="font-medium">{article.author.name}</div>
+                <div className="text-sm text-gray-400">
+                  {new Date(article.date).toLocaleDateString('vi-VN', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                  })}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        {/* Main Content */}
+        <div className="lg:col-span-8">
+          <div className="bg-[#121214] border border-[#2a2a30] rounded-xl p-8 mb-8">
+            <div className="prose prose-invert max-w-none">
+              {article.content.split('\n\n').map((paragraph, index) => (
+                <p key={index} className="mb-4 text-gray-300 leading-relaxed">
+                  {paragraph}
+                </p>
+              ))}
+            </div>
+          </div>
+
+          {/* Engagement Section */}
+          <div className="bg-[#121214] border border-[#2a2a30] rounded-xl p-6 mb-8">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-6">
+                <Button variant="outline" className="gap-2">
+                  <ThumbsUp className="h-4 w-4" />
+                  <span>{engagementData.likes}</span>
+                </Button>
+                <Button variant="outline" className="gap-2">
+                  <Share2 className="h-4 w-4" />
+                  <span>{engagementData.shares}</span>
+                </Button>
+              </div>
+              <Button variant="outline" className="gap-2">
+                <MessageSquare className="h-4 w-4" />
+                <span>Bình luận</span>
+              </Button>
+            </div>
+          </div>
+
+          {/* Comments Section */}
+          <CommentsSection />
+        </div>
+
+        {/* Sidebar */}
+        <div className="lg:col-span-4 space-y-8">
+          {/* Author Card */}
+          <div className="bg-[#121214] border border-[#2a2a30] rounded-xl p-6">
+            <div className="flex items-center gap-4 mb-4">
+              <Avatar className="h-16 w-16">
+                <AvatarImage src={article.author.image} />
+                <AvatarFallback>{article.author.name[0]}</AvatarFallback>
+              </Avatar>
+              <div>
+                <h3 className="font-bold text-lg">{article.author.name}</h3>
+                <p className="text-gray-400">Tech Journalist</p>
+              </div>
+            </div>
+            <p className="text-gray-300 mb-4">
+              Chuyên gia về công nghệ và tác động của nó đến cuộc sống hàng ngày. Đưa tin mới nhất về phần cứng và linh kiện PC.
+            </p>
+            <Button className="w-full">Theo dõi tác giả</Button>
+          </div>
+
+          {/* Related Articles */}
+          <div className="bg-[#121214] border border-[#2a2a30] rounded-xl p-6">
+            <h3 className="font-bold text-lg mb-4">Bài viết liên quan</h3>
+            <div className="space-y-4">
+              {relatedArticles.map((related) => (
+                <Link
+                  key={related.id}
+                  href={`/pc-components/${related.id}`}
+                  className="block group"
+                >
+                  <div className="flex gap-4">
+                    <div className="relative w-20 h-20 flex-shrink-0">
+                      <Image
+                        src={related.image}
+                        alt={related.title}
+                        fill
+                        className="object-cover rounded-lg"
+                      />
+                    </div>
+                    <div>
+                      <h4 className="font-medium group-hover:text-blue-400 transition-colors line-clamp-2">
+                        {related.title}
+                      </h4>
+                      <div className="text-sm text-gray-400 mt-1">
+                        {new Date(related.date).toLocaleDateString('vi-VN', {
+                          year: 'numeric',
+                          month: 'long',
+                          day: 'numeric'
+                        })}
+                      </div>
+                    </div>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+} 

@@ -1,0 +1,17 @@
+{
+  "articles": [
+    {
+      "id": "rtx-4090-super-leak",
+      "title": "NVIDIA GeForce RTX 4090 Super Rumored for Early 2024",
+      "excerpt": "New leaks suggest NVIDIA is preparing to launch an even more powerful variant of its flagship GPU.",
+      "content": "Recent leaks from reliable sources suggest that NVIDIA is gearing up to launch a Super variant of its flagship RTX 4090 graphics card in early 2024...",
+      "image": "https://images.pexels.com/photos/1034425/pexels-photo-1034425.jpeg",
+      "category": "GPU",
+      "author": {
+        "name": "TechReviewer",
+        "image": "https://images.pexels.com/photos/2582937/pexels-photo-2582937.jpeg"
+      },
+      "date": "2024-03-20T10:30:00Z"
+    }
+  ]
+}

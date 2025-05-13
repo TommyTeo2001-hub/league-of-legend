@@ -1,0 +1,75 @@
+{
+  "champions": {
+    "ahri": {
+      "image": "https://images.pexels.com/photos/7915575/pexels-photo-7915575.jpeg",
+      "strongCounters": [
+        { "name": "Talon", "winRate": "54.2%", "image": "https://images.pexels.com/photos/7915575/pexels-photo-7915575.jpeg" },
+        { "name": "Master Yi", "winRate": "53.8%", "image": "https://images.pexels.com/photos/7915575/pexels-photo-7915575.jpeg" },
+        { "name": "Teemo", "winRate": "53.5%", "image": "https://images.pexels.com/photos/7915575/pexels-photo-7915575.jpeg" },
+        { "name": "Diana", "winRate": "52.9%", "image": "https://images.pexels.com/photos/7915575/pexels-photo-7915575.jpeg" },
+        { "name": "Elise", "winRate": "52.7%", "image": "https://images.pexels.com/photos/7915575/pexels-photo-7915575.jpeg" },
+        { "name": "Belveth", "winRate": "52.5%", "image": "https://images.pexels.com/photos/7915575/pexels-photo-7915575.jpeg" }
+      ],
+      "weakAgainst": [
+        { "name": "Hecarim", "winRate": "47.2%", "image": "https://images.pexels.com/photos/7915575/pexels-photo-7915575.jpeg" },
+        { "name": "Wukong", "winRate": "47.5%", "image": "https://images.pexels.com/photos/7915575/pexels-photo-7915575.jpeg" },
+        { "name": "Nunu", "winRate": "47.8%", "image": "https://images.pexels.com/photos/7915575/pexels-photo-7915575.jpeg" },
+        { "name": "Sejuani", "winRate": "48.1%", "image": "https://images.pexels.com/photos/7915575/pexels-photo-7915575.jpeg" },
+        { "name": "Gwen", "winRate": "48.3%", "image": "https://images.pexels.com/photos/7915575/pexels-photo-7915575.jpeg" }
+      ],
+      "weaknesses": [
+        "Lacks hard engage abilities",
+        "Vulnerable during Blood Frenzy (W)",
+        "Heavily reliant on ultimate for initiation",
+        "Can be kited by mobile champions",
+        "Weak against coordinated teams"
+      ],
+      "counterItems": [
+        {
+          "name": "Thornmail",
+          "image": "https://images.pexels.com/photos/7915575/pexels-photo-7915575.jpeg",
+          "description": "Reflects damage and applies Grievous Wounds, countering Briar's healing"
+        },
+        {
+          "name": "Locket of the Iron Solari",
+          "image": "https://images.pexels.com/photos/7915575/pexels-photo-7915575.jpeg",
+          "description": "Provides team-wide shield against Briar's burst damage"
+        },
+        {
+          "name": "Frozen Heart",
+          "image": "https://images.pexels.com/photos/7915575/pexels-photo-7915575.jpeg",
+          "description": "Reduces attack speed, limiting Briar's damage output"
+        }
+      ],
+      "strategies": [
+        {
+          "title": "Kite and Disengage",
+          "description": "Choose mobile champions and maintain distance to kite Briar effectively",
+          "tips": [
+            "Use champions like Vayne, Ezreal, or Kai'Sa",
+            "Save mobility spells for when Briar engages",
+            "Maintain proper spacing during laning phase"
+          ]
+        },
+        {
+          "title": "Control During Blood Frenzy",
+          "description": "Apply hard CC when Briar activates Blood Frenzy (W)",
+          "tips": [
+            "Save CC abilities for when Briar uses W",
+            "Coordinate CC with teammates",
+            "Use displacement abilities to disrupt her positioning"
+          ]
+        },
+        {
+          "title": "Counter Ultimate",
+          "description": "Avoid or counter Briar's ultimate engagement",
+          "tips": [
+            "Keep track of Briar's ultimate cooldown",
+            "Use Flash or mobility spells to dodge Sleep Dart",
+            "Position near teammates for protection"
+          ]
+        }
+      ]
+    }
+  }
+}

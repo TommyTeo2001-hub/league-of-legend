@@ -1,0 +1,20 @@
+{
+  "champions": [
+    {
+      "name": "Ahri",
+      "image": "https://images.pexels.com/photos/7915264/pexels-photo-7915264.jpeg",
+      "pickRate": "32.5%",
+      "winRate": "52.3%",
+      "role": "Mid",
+      "tier": "S",
+      "totalMatches": "125,432",
+      "change": "+2.1%",
+      "trend": [
+        { "week": "Week 1", "pickRate": 30.2, "winRate": 51.8, "matches": 24500 },
+        { "week": "Week 2", "pickRate": 31.5, "winRate": 52.1, "matches": 25100 },
+        { "week": "Week 3", "pickRate": 31.8, "winRate": 51.9, "matches": 25300 },
+        { "week": "Week 4", "pickRate": 32.5, "winRate": 52.3, "matches": 25532 }
+      ]
+    }
+  ]
+}

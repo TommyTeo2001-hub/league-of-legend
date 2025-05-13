@@ -1,0 +1,1044 @@
+{
+  "league": [
+    {
+      "id": "ahri",
+      "name": "Ahri",
+      "title": "The Nine-Tailed Fox",
+      "role": "Mage",
+      "difficulty": "Moderate",
+      "img": "https://images.pexels.com/photos/7915264/pexels-photo-7915264.jpeg",
+      "image": "https://images.pexels.com/photos/7915264/pexels-photo-7915264.jpeg",
+      "pickRate": "12.5%",
+      "winRate": "52.3%",
+      "banRate": "8.2%",
+      "patch": "13.7",
+      "matchesScanned": "15,278",
+      "stats": {
+        "health": 570,
+        "mana": 418,
+        "armor": 21,
+        "magicResist": 30,
+        "attackDamage": 53,
+        "attackSpeed": 0.668
+      },
+      "abilities": {
+        "passive": {
+          "name": "Essence Theft",
+          "description": "Gains a charge of Essence Theft whenever her spells hit an enemy (up to 3 charges per spell). Upon reaching 9 charges, Ahri's next spell heals her for each enemy hit.",
+          "icon": "https://images.pexels.com/photos/7915264/pexels-photo-7915264.jpeg"
+        },
+        "q": {
+          "name": "Orb of Deception",
+          "description": "Ahri sends out and pulls back her orb, dealing magic damage on the way out and true damage on the way back.",
+          "icon": "https://images.pexels.com/photos/7915264/pexels-photo-7915264.jpeg",
+          "cost": "70 Mana",
+          "cooldown": "7",
+          "range": "880"
+        },
+        "w": {
+          "name": "Fox-Fire",
+          "description": "Ahri releases three fox-fires, that lock onto and attack nearby enemies.",
+          "icon": "https://images.pexels.com/photos/7915264/pexels-photo-7915264.jpeg",
+          "cost": "55 Mana",
+          "cooldown": "9",
+          "range": "700"
+        },
+        "e": {
+          "name": "Charm",
+          "description": "Ahri blows a kiss that damages and charms an enemy, causing them to walk harmlessly towards her and take increased damage from her abilities.",
+          "icon": "https://images.pexels.com/photos/7915264/pexels-photo-7915264.jpeg",
+          "cost": "85 Mana",
+          "cooldown": "12",
+          "range": "975"
+        },
+        "r": {
+          "name": "Spirit Rush",
+          "description": "Ahri dashes and fires essence bolts, damaging nearby enemies. Spirit Rush can be cast up to three times before going on cooldown.",
+          "icon": "https://images.pexels.com/photos/7915264/pexels-photo-7915264.jpeg",
+          "cost": "100 Mana",
+          "cooldown": "130",
+          "range": "450"
+        }
+      },
+      "runes": {
+        "primary": [
+          {
+            "name": "Electrocute",
+            "icon": "https://images.pexels.com/photos/7915264/pexels-photo-7915264.jpeg",
+            "category": "Domination",
+            "winRate": "53%",
+            "pickRate": "85%"
+          },
+          {
+            "name": "Sudden Impact",
+            "icon": "https://images.pexels.com/photos/7915264/pexels-photo-7915264.jpeg",
+            "category": "Domination",
+            "winRate": "52%",
+            "pickRate": "90%"
+          },
+          {
+            "name": "Eyeball Collection",
+            "icon": "https://images.pexels.com/photos/7915264/pexels-photo-7915264.jpeg",
+            "category": "Domination",
+            "winRate": "51%",
+            "pickRate": "75%"
+          },
+          {
+            "name": "Ultimate Hunter",
+            "icon": "https://images.pexels.com/photos/7915264/pexels-photo-7915264.jpeg",
+            "category": "Domination",
+            "winRate": "54%",
+            "pickRate": "65%"
+          }
+        ],
+        "secondary": [
+          {
+            "name": "Manaflow Band",
+            "icon": "https://images.pexels.com/photos/7915264/pexels-photo-7915264.jpeg",
+            "category": "Sorcery",
+            "winRate": "52%",
+            "pickRate": "80%"
+          },
+          {
+            "name": "Transcendence",
+            "icon": "https://images.pexels.com/photos/7915264/pexels-photo-7915264.jpeg",
+            "category": "Sorcery",
+            "winRate": "53%",
+            "pickRate": "75%"
+          }
+        ]
+      },
+      "summonerSpells": [
+        {
+          "name": "Flash",
+          "icon": "https://images.pexels.com/photos/7915264/pexels-photo-7915264.jpeg"
+        },
+        {
+          "name": "Ignite",
+          "icon": "https://images.pexels.com/photos/7915264/pexels-photo-7915264.jpeg"
+        }
+      ],
+      "build": {
+        "starters": [
+          {
+            "name": "Doran's Ring",
+            "icon": "https://images.pexels.com/photos/7915264/pexels-photo-7915264.jpeg"
+          },
+          {
+            "name": "Health Potion",
+            "icon": "https://images.pexels.com/photos/7915264/pexels-photo-7915264.jpeg"
+          }
+        ],
+        "coreItems": [
+          {
+            "name": "Luden's Echo",
+            "icon": "https://images.pexels.com/photos/7915264/pexels-photo-7915264.jpeg"
+          },
+          {
+            "name": "Sorcerer's Shoes",
+            "icon": "https://images.pexels.com/photos/7915264/pexels-photo-7915264.jpeg"
+          },
+          {
+            "name": "Horizon Focus",
+            "icon": "https://images.pexels.com/photos/7915264/pexels-photo-7915264.jpeg"
+          }
+        ],
+        "luxuryItems": [
+          {
+            "name": "Rabadon's Deathcap",
+            "icon": "https://images.pexels.com/photos/7915264/pexels-photo-7915264.jpeg"
+          },
+          {
+            "name": "Void Staff",
+            "icon": "https://images.pexels.com/photos/7915264/pexels-photo-7915264.jpeg"
+          }
+        ],
+        "boots": [
+          {
+            "name": "Sorcerer's Shoes",
+            "icon": "https://images.pexels.com/photos/7915264/pexels-photo-7915264.jpeg"
+          }
+        ]
+      },
+      "abilityOrders": [
+        {
+          "winRate": "54.2%",
+          "pickRate": "87.5%",
+          "order": {
+            "passive": {
+              "name": "Essence Theft",
+              "icon": "https://images.pexels.com/photos/7915264/pexels-photo-7915264.jpeg"
+            },
+            "abilities": [
+              {
+                "key": "Q",
+                "name": "Orb of Deception",
+                "icon": "https://images.pexels.com/photos/7915264/pexels-photo-7915264.jpeg",
+                "levels": [true, true, true, true, true, false, false, false, false, false, false, false, false, false, false, false, false, false]
+              },
+              {
+                "key": "W",
+                "name": "Fox-Fire",
+                "icon": "https://images.pexels.com/photos/7915264/pexels-photo-7915264.jpeg",
+                "levels": [false, false, false, false, false, false, true, true, true, true, true, false, false, false, false, false, false, false]
+              },
+              {
+                "key": "E",
+                "name": "Charm",
+                "icon": "https://images.pexels.com/photos/7915264/pexels-photo-7915264.jpeg",
+                "levels": [false, false, false, false, false, true, false, false, false, false, false, true, true, true, false, false, false, false]
+              },
+              {
+                "key": "R",
+                "name": "Spirit Rush",
+                "icon": "https://images.pexels.com/photos/7915264/pexels-photo-7915264.jpeg",
+                "levels": [false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, true, true, false]
+              }
+            ]
+          }
+        }
+      ],
+      "counters": {
+        "strong": [
+          {
+            "name": "Lux",
+            "rating": 8.5,
+            "image": "https://images.pexels.com/photos/7915264/pexels-photo-7915264.jpeg"
+          },
+          {
+            "name": "Veigar",
+            "rating": 7.8,
+            "image": "https://images.pexels.com/photos/7915264/pexels-photo-7915264.jpeg"
+          },
+          {
+            "name": "Vel'Koz",
+            "rating": 7.2,
+            "image": "https://images.pexels.com/photos/7915264/pexels-photo-7915264.jpeg"
+          }
+        ],
+        "weak": [
+          {
+            "name": "Zed",
+            "rating": 6.8,
+            "image": "https://images.pexels.com/photos/7915264/pexels-photo-7915264.jpeg"
+          },
+          {
+            "name": "Fizz",
+            "rating": 7.5,
+            "image": "https://images.pexels.com/photos/7915264/pexels-photo-7915264.jpeg"
+          },
+          {
+            "name": "LeBlanc",
+            "rating": 6.5,
+            "image": "https://images.pexels.com/photos/7915264/pexels-photo-7915264.jpeg"
+          }
+        ]
+      },
+      "skins": [
+        {
+          "name": "Dynasty Ahri",
+          "image": "https://images.pexels.com/photos/7915264/pexels-photo-7915264.jpeg",
+          "price": 750,
+          "releaseDate": "2011-12-14"
+        },
+        {
+          "name": "Midnight Ahri",
+          "image": "https://images.pexels.com/photos/7915264/pexels-photo-7915264.jpeg",
+          "price": 750,
+          "releaseDate": "2011-12-14"
+        },
+        {
+          "name": "Star Guardian Ahri",
+          "image": "https://images.pexels.com/photos/7915264/pexels-photo-7915264.jpeg",
+          "price": 1820,
+          "releaseDate": "2017-09-07"
+        }
+      ]
+    },
+    {
+      "id": "yasuo",
+      "name": "Yasuo",
+      "title": "The Unforgiven",
+      "role": "Fighter",
+      "difficulty": "High",
+      "img": "https://images.pexels.com/photos/6498853/pexels-photo-6498853.jpeg",
+      "image": "https://images.pexels.com/photos/6498853/pexels-photo-6498853.jpeg",
+      "pickRate": "15.8%",
+      "winRate": "48.7%",
+      "banRate": "22.3%",
+      "patch": "13.7",
+      "matchesScanned": "22,456",
+      "stats": {
+        "health": 590,
+        "mana": 100,
+        "armor": 30,
+        "magicResist": 32,
+        "attackDamage": 60,
+        "attackSpeed": 0.697
+      },
+      "abilities": {
+        "passive": {
+          "name": "Way of the Wanderer",
+          "description": "Yasuo's critical strike chance is doubled, but the damage from his critical strikes is reduced. Additionally, Yasuo builds up a shield whenever he moves. The shield triggers when he takes damage from a champion or monster.",
+          "icon": "https://images.pexels.com/photos/6498853/pexels-photo-6498853.jpeg"
+        },
+        "q": {
+          "name": "Steel Tempest",
+          "description": "Yasuo thrusts his sword forward, damaging all enemies in a line. Successfully landing this ability grants a stack of Gathering Storm. At 2 stacks, the next Steel Tempest fires a whirlwind that knocks enemies airborne.",
+          "icon": "https://images.pexels.com/photos/6498853/pexels-photo-6498853.jpeg",
+          "cost": "No Cost",
+          "cooldown": "4",
+          "range": "475"
+        },
+        "w": {
+          "name": "Wind Wall",
+          "description": "Yasuo creates a wall of wind that blocks all enemy projectiles for 4 seconds.",
+          "icon": "https://images.pexels.com/photos/6498853/pexels-photo-6498853.jpeg",
+          "cost": "No Cost",
+          "cooldown": "26",
+          "range": "400"
+        },
+        "e": {
+          "name": "Sweeping Blade",
+          "description": "Yasuo dashes through target enemy, dealing damage. Each cast increases the next dash's base damage, up to a maximum amount. Cannot be recast on the same enemy for a few seconds.",
+          "icon": "https://images.pexels.com/photos/6498853/pexels-photo-6498853.jpeg",
+          "cost": "No Cost",
+          "cooldown": "0.5",
+          "range": "475"
+        },
+        "r": {
+          "name": "Last Breath",
+          "description": "Yasuo teleports to a nearby enemy champion that is Airborne and deals physical damage and holds all Airborne enemies in the area in the air. Afterward, Yasuo gains bonus Armor Penetration against his enemies' bonus armor.",
+          "icon": "https://images.pexels.com/photos/6498853/pexels-photo-6498853.jpeg",
+          "cost": "No Cost",
+          "cooldown": "80",
+          "range": "1400"
+        }
+      },
+      "runes": {
+        "primary": [
+          {
+            "name": "Conqueror",
+            "icon": "https://images.pexels.com/photos/6498853/pexels-photo-6498853.jpeg",
+            "category": "Precision",
+            "winRate": "49%",
+            "pickRate": "92%"
+          },
+          {
+            "name": "Triumph",
+            "icon": "https://images.pexels.com/photos/6498853/pexels-photo-6498853.jpeg",
+            "category": "Precision",
+            "winRate": "48%",
+            "pickRate": "88%"
+          },
+          {
+            "name": "Legend: Alacrity",
+            "icon": "https://images.pexels.com/photos/6498853/pexels-photo-6498853.jpeg",
+            "category": "Precision",
+            "winRate": "49%",
+            "pickRate": "78%"
+          },
+          {
+            "name": "Last Stand",
+            "icon": "https://images.pexels.com/photos/6498853/pexels-photo-6498853.jpeg",
+            "category": "Precision",
+            "winRate": "50%",
+            "pickRate": "82%"
+          }
+        ],
+        "secondary": [
+          {
+            "name": "Taste of Blood",
+            "icon": "https://images.pexels.com/photos/6498853/pexels-photo-6498853.jpeg",
+            "category": "Domination",
+            "winRate": "49%",
+            "pickRate": "75%"
+          },
+          {
+            "name": "Ravenous Hunter",
+            "icon": "https://images.pexels.com/photos/6498853/pexels-photo-6498853.jpeg",
+            "category": "Domination",
+            "winRate": "49%",
+            "pickRate": "82%"
+          }
+        ]
+      },
+      "summonerSpells": [
+        {
+          "name": "Flash",
+          "icon": "https://images.pexels.com/photos/6498853/pexels-photo-6498853.jpeg"
+        },
+        {
+          "name": "Ignite",
+          "icon": "https://images.pexels.com/photos/6498853/pexels-photo-6498853.jpeg"
+        }
+      ],
+      "build": {
+        "starters": [
+          {
+            "name": "Doran's Blade",
+            "icon": "https://images.pexels.com/photos/6498853/pexels-photo-6498853.jpeg"
+          },
+          {
+            "name": "Health Potion",
+            "icon": "https://images.pexels.com/photos/6498853/pexels-photo-6498853.jpeg"
+          }
+        ],
+        "coreItems": [
+          {
+            "name": "Berserker's Greaves",
+            "icon": "https://images.pexels.com/photos/6498853/pexels-photo-6498853.jpeg"
+          },
+          {
+            "name": "Immortal Shieldbow",
+            "icon": "https://images.pexels.com/photos/6498853/pexels-photo-6498853.jpeg"
+          },
+          {
+            "name": "Infinity Edge",
+            "icon": "https://images.pexels.com/photos/6498853/pexels-photo-6498853.jpeg"
+          }
+        ],
+        "luxuryItems": [
+          {
+            "name": "Bloodthirster",
+            "icon": "https://images.pexels.com/photos/6498853/pexels-photo-6498853.jpeg"
+          },
+          {
+            "name": "Guardian Angel",
+            "icon": "https://images.pexels.com/photos/6498853/pexels-photo-6498853.jpeg"
+          }
+        ],
+        "boots": [
+          {
+            "name": "Berserker's Greaves",
+            "icon": "https://images.pexels.com/photos/6498853/pexels-photo-6498853.jpeg"
+          }
+        ]
+      },
+      "abilityOrders": [
+        {
+          "winRate": "49.5%",
+          "pickRate": "92.1%",
+          "order": {
+            "passive": {
+              "name": "Way of the Wanderer",
+              "icon": "https://images.pexels.com/photos/6498853/pexels-photo-6498853.jpeg"
+            },
+            "abilities": [
+              {
+                "key": "Q",
+                "name": "Steel Tempest",
+                "icon": "https://images.pexels.com/photos/6498853/pexels-photo-6498853.jpeg",
+                "levels": [true, false, false, true, true, true, true, true, true, false, false, false, false, false, false, false, false, false]
+              },
+              {
+                "key": "W",
+                "name": "Wind Wall",
+                "icon": "https://images.pexels.com/photos/6498853/pexels-photo-6498853.jpeg",
+                "levels": [false, false, true, false, false, false, false, false, false, true, true, true, true, false, false, false, false, false]
+              },
+              {
+                "key": "E",
+                "name": "Sweeping Blade",
+                "icon": "https://images.pexels.com/photos/6498853/pexels-photo-6498853.jpeg",
+                "levels": [false, true, false, false, false, false, false, false, false, false, false, false, false, true, true, true, false, false]
+              },
+              {
+                "key": "R",
+                "name": "Last Breath",
+                "icon": "https://images.pexels.com/photos/6498853/pexels-photo-6498853.jpeg",
+                "levels": [false, false, false, false, false, true, false, false, false, false, false, true, false, false, false, false, true, false]
+              }
+            ]
+          }
+        }
+      ],
+      "counters": {
+        "strong": [
+          {
+            "name": "Veigar",
+            "rating": 7.8,
+            "image": "https://images.pexels.com/photos/6498853/pexels-photo-6498853.jpeg"
+          },
+          {
+            "name": "Lux",
+            "rating": 7.2,
+            "image": "https://images.pexels.com/photos/6498853/pexels-photo-6498853.jpeg"
+          },
+          {
+            "name": "Xerath",
+            "rating": 8.1,
+            "image": "https://images.pexels.com/photos/6498853/pexels-photo-6498853.jpeg"
+          }
+        ],
+        "weak": [
+          {
+            "name": "Renekton",
+            "rating": 7.8,
+            "image": "https://images.pexels.com/photos/6498853/pexels-photo-6498853.jpeg"
+          },
+          {
+            "name": "Pantheon",
+            "rating": 7.5,
+            "image": "https://images.pexels.com/photos/6498853/pexels-photo-6498853.jpeg"
+          },
+          {
+            "name": "Riven",
+            "rating": 6.9,
+            "image": "https://images.pexels.com/photos/6498853/pexels-photo-6498853.jpeg"
+          }
+        ]
+      },
+      "skins": [
+        {
+          "name": "High Noon Yasuo",
+          "image": "https://images.pexels.com/photos/6498853/pexels-photo-6498853.jpeg",
+          "price": 975,
+          "releaseDate": "2014-12-15"
+        },
+        {
+          "name": "Blood Moon Yasuo",
+          "image": "https://images.pexels.com/photos/6498853/pexels-photo-6498853.jpeg",
+          "price": 975,
+          "releaseDate": "2016-06-09"
+        },
+        {
+          "name": "Nightbringer Yasuo",
+          "image": "https://images.pexels.com/photos/6498853/pexels-photo-6498853.jpeg",
+          "price": 1820,
+          "releaseDate": "2017-06-14"
+        }
+      ]
+    }
+  ],
+  "wildrift": [
+    {
+      "id": "ahri",
+      "name": "Ahri",
+      "title": "The Nine-Tailed Fox",
+      "role": "Mage",
+      "difficulty": "Moderate",
+      "img": "https://images.pexels.com/photos/7915264/pexels-photo-7915264.jpeg",
+      "image": "https://images.pexels.com/photos/7915264/pexels-photo-7915264.jpeg",
+      "pickRate": "12.5%",
+      "winRate": "52.3%",
+      "banRate": "8.2%",
+      "patch": "13.7",
+      "matchesScanned": "15,278",
+      "stats": {
+        "health": 570,
+        "mana": 418,
+        "armor": 21,
+        "magicResist": 30,
+        "attackDamage": 53,
+        "attackSpeed": 0.668
+      },
+      "abilities": {
+        "passive": {
+          "name": "Essence Theft",
+          "description": "Gains a charge of Essence Theft whenever her spells hit an enemy (up to 3 charges per spell). Upon reaching 9 charges, Ahri's next spell heals her for each enemy hit.",
+          "icon": "https://images.pexels.com/photos/7915264/pexels-photo-7915264.jpeg"
+        },
+        "q": {
+          "name": "Orb of Deception",
+          "description": "Ahri sends out and pulls back her orb, dealing magic damage on the way out and true damage on the way back.",
+          "icon": "https://images.pexels.com/photos/7915264/pexels-photo-7915264.jpeg",
+          "cost": "70 Mana",
+          "cooldown": "7",
+          "range": "880"
+        },
+        "w": {
+          "name": "Fox-Fire",
+          "description": "Ahri releases three fox-fires, that lock onto and attack nearby enemies.",
+          "icon": "https://images.pexels.com/photos/7915264/pexels-photo-7915264.jpeg",
+          "cost": "55 Mana",
+          "cooldown": "9",
+          "range": "700"
+        },
+        "e": {
+          "name": "Charm",
+          "description": "Ahri blows a kiss that damages and charms an enemy, causing them to walk harmlessly towards her and take increased damage from her abilities.",
+          "icon": "https://images.pexels.com/photos/7915264/pexels-photo-7915264.jpeg",
+          "cost": "85 Mana",
+          "cooldown": "12",
+          "range": "975"
+        },
+        "r": {
+          "name": "Spirit Rush",
+          "description": "Ahri dashes and fires essence bolts, damaging nearby enemies. Spirit Rush can be cast up to three times before going on cooldown.",
+          "icon": "https://images.pexels.com/photos/7915264/pexels-photo-7915264.jpeg",
+          "cost": "100 Mana",
+          "cooldown": "130",
+          "range": "450"
+        }
+      },
+      "runes": {
+        "primary": [
+          {
+            "name": "Electrocute",
+            "icon": "https://images.pexels.com/photos/7915264/pexels-photo-7915264.jpeg",
+            "category": "Domination",
+            "winRate": "53%",
+            "pickRate": "85%"
+          },
+          {
+            "name": "Sudden Impact",
+            "icon": "https://images.pexels.com/photos/7915264/pexels-photo-7915264.jpeg",
+            "category": "Domination",
+            "winRate": "52%",
+            "pickRate": "90%"
+          },
+          {
+            "name": "Eyeball Collection",
+            "icon": "https://images.pexels.com/photos/7915264/pexels-photo-7915264.jpeg",
+            "category": "Domination",
+            "winRate": "51%",
+            "pickRate": "75%"
+          },
+          {
+            "name": "Ultimate Hunter",
+            "icon": "https://images.pexels.com/photos/7915264/pexels-photo-7915264.jpeg",
+            "category": "Domination",
+            "winRate": "54%",
+            "pickRate": "65%"
+          }
+        ],
+        "secondary": [
+          {
+            "name": "Manaflow Band",
+            "icon": "https://images.pexels.com/photos/7915264/pexels-photo-7915264.jpeg",
+            "category": "Sorcery",
+            "winRate": "52%",
+            "pickRate": "80%"
+          },
+          {
+            "name": "Transcendence",
+            "icon": "https://images.pexels.com/photos/7915264/pexels-photo-7915264.jpeg",
+            "category": "Sorcery",
+            "winRate": "53%",
+            "pickRate": "75%"
+          }
+        ]
+      },
+      "summonerSpells": [
+        {
+          "name": "Flash",
+          "icon": "https://images.pexels.com/photos/7915264/pexels-photo-7915264.jpeg"
+        },
+        {
+          "name": "Ignite",
+          "icon": "https://images.pexels.com/photos/7915264/pexels-photo-7915264.jpeg"
+        }
+      ],
+      "build": {
+        "starters": [
+          {
+            "name": "Doran's Ring",
+            "icon": "https://images.pexels.com/photos/7915264/pexels-photo-7915264.jpeg"
+          },
+          {
+            "name": "Health Potion",
+            "icon": "https://images.pexels.com/photos/7915264/pexels-photo-7915264.jpeg"
+          }
+        ],
+        "coreItems": [
+          {
+            "name": "Luden's Echo",
+            "icon": "https://images.pexels.com/photos/7915264/pexels-photo-7915264.jpeg"
+          },
+          {
+            "name": "Sorcerer's Shoes",
+            "icon": "https://images.pexels.com/photos/7915264/pexels-photo-7915264.jpeg"
+          },
+          {
+            "name": "Horizon Focus",
+            "icon": "https://images.pexels.com/photos/7915264/pexels-photo-7915264.jpeg"
+          }
+        ],
+        "luxuryItems": [
+          {
+            "name": "Rabadon's Deathcap",
+            "icon": "https://images.pexels.com/photos/7915264/pexels-photo-7915264.jpeg"
+          },
+          {
+            "name": "Void Staff",
+            "icon": "https://images.pexels.com/photos/7915264/pexels-photo-7915264.jpeg"
+          }
+        ],
+        "boots": [
+          {
+            "name": "Sorcerer's Shoes",
+            "icon": "https://images.pexels.com/photos/7915264/pexels-photo-7915264.jpeg"
+          }
+        ]
+      },
+      "abilityOrders": [
+        {
+          "winRate": "54.2%",
+          "pickRate": "87.5%",
+          "order": {
+            "passive": {
+              "name": "Essence Theft",
+              "icon": "https://images.pexels.com/photos/7915264/pexels-photo-7915264.jpeg"
+            },
+            "abilities": [
+              {
+                "key": "Q",
+                "name": "Orb of Deception",
+                "icon": "https://images.pexels.com/photos/7915264/pexels-photo-7915264.jpeg",
+                "levels": [true, true, true, true, true, false, false, false, false, false, false, false, false, false, false, false, false, false]
+              },
+              {
+                "key": "W",
+                "name": "Fox-Fire",
+                "icon": "https://images.pexels.com/photos/7915264/pexels-photo-7915264.jpeg",
+                "levels": [false, false, false, false, false, false, true, true, true, true, true, false, false, false, false, false, false, false]
+              },
+              {
+                "key": "E",
+                "name": "Charm",
+                "icon": "https://images.pexels.com/photos/7915264/pexels-photo-7915264.jpeg",
+                "levels": [false, false, false, false, false, true, false, false, false, false, false, true, true, true, false, false, false, false]
+              },
+              {
+                "key": "R",
+                "name": "Spirit Rush",
+                "icon": "https://images.pexels.com/photos/7915264/pexels-photo-7915264.jpeg",
+                "levels": [false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, true, true, false]
+              }
+            ]
+          }
+        }
+      ],
+      "counters": {
+        "strong": [
+          {
+            "name": "Lux",
+            "rating": 8.5,
+            "image": "https://images.pexels.com/photos/7915264/pexels-photo-7915264.jpeg"
+          },
+          {
+            "name": "Veigar",
+            "rating": 7.8,
+            "image": "https://images.pexels.com/photos/7915264/pexels-photo-7915264.jpeg"
+          },
+          {
+            "name": "Vel'Koz",
+            "rating": 7.2,
+            "image": "https://images.pexels.com/photos/7915264/pexels-photo-7915264.jpeg"
+          }
+        ],
+        "weak": [
+          {
+            "name": "Zed",
+            "rating": 6.8,
+            "image": "https://images.pexels.com/photos/7915264/pexels-photo-7915264.jpeg"
+          },
+          {
+            "name": "Fizz",
+            "rating": 7.5,
+            "image": "https://images.pexels.com/photos/7915264/pexels-photo-7915264.jpeg"
+          },
+          {
+            "name": "LeBlanc",
+            "rating": 6.5,
+            "image": "https://images.pexels.com/photos/7915264/pexels-photo-7915264.jpeg"
+          }
+        ]
+      },
+      "skins": [
+        {
+          "name": "Dynasty Ahri",
+          "image": "https://images.pexels.com/photos/7915264/pexels-photo-7915264.jpeg",
+          "price": 750,
+          "releaseDate": "2011-12-14"
+        },
+        {
+          "name": "Midnight Ahri",
+          "image": "https://images.pexels.com/photos/7915264/pexels-photo-7915264.jpeg",
+          "price": 750,
+          "releaseDate": "2011-12-14"
+        },
+        {
+          "name": "Star Guardian Ahri",
+          "image": "https://images.pexels.com/photos/7915264/pexels-photo-7915264.jpeg",
+          "price": 1820,
+          "releaseDate": "2017-09-07"
+        }
+      ]
+    },
+    {
+      "id": "yasuo",
+      "name": "Yasuo",
+      "title": "The Unforgiven",
+      "role": "Fighter",
+      "difficulty": "High",
+      "img": "https://images.pexels.com/photos/6498853/pexels-photo-6498853.jpeg",
+      "image": "https://images.pexels.com/photos/6498853/pexels-photo-6498853.jpeg",
+      "pickRate": "15.8%",
+      "winRate": "48.7%",
+      "banRate": "22.3%",
+      "patch": "13.7",
+      "matchesScanned": "22,456",
+      "stats": {
+        "health": 590,
+        "mana": 100,
+        "armor": 30,
+        "magicResist": 32,
+        "attackDamage": 60,
+        "attackSpeed": 0.697
+      },
+      "abilities": {
+        "passive": {
+          "name": "Way of the Wanderer",
+          "description": "Yasuo's critical strike chance is doubled, but the damage from his critical strikes is reduced. Additionally, Yasuo builds up a shield whenever he moves. The shield triggers when he takes damage from a champion or monster.",
+          "icon": "https://images.pexels.com/photos/6498853/pexels-photo-6498853.jpeg"
+        },
+        "q": {
+          "name": "Steel Tempest",
+          "description": "Yasuo thrusts his sword forward, damaging all enemies in a line. Successfully landing this ability grants a stack of Gathering Storm. At 2 stacks, the next Steel Tempest fires a whirlwind that knocks enemies airborne.",
+          "icon": "https://images.pexels.com/photos/6498853/pexels-photo-6498853.jpeg",
+          "cost": "No Cost",
+          "cooldown": "4",
+          "range": "475"
+        },
+        "w": {
+          "name": "Wind Wall",
+          "description": "Yasuo creates a wall of wind that blocks all enemy projectiles for 4 seconds.",
+          "icon": "https://images.pexels.com/photos/6498853/pexels-photo-6498853.jpeg",
+          "cost": "No Cost",
+          "cooldown": "26",
+          "range": "400"
+        },
+        "e": {
+          "name": "Sweeping Blade",
+          "description": "Yasuo dashes through target enemy, dealing damage. Each cast increases the next dash's base damage, up to a maximum amount. Cannot be recast on the same enemy for a few seconds.",
+          "icon": "https://images.pexels.com/photos/6498853/pexels-photo-6498853.jpeg",
+          "cost": "No Cost",
+          "cooldown": "0.5",
+          "range": "475"
+        },
+        "r": {
+          "name": "Last Breath",
+          "description": "Yasuo teleports to a nearby enemy champion that is Airborne and deals physical damage and holds all Airborne enemies in the area in the air. Afterward, Yasuo gains bonus Armor Penetration against his enemies' bonus armor.",
+          "icon": "https://images.pexels.com/photos/6498853/pexels-photo-6498853.jpeg",
+          "cost": "No Cost",
+          "cooldown": "80",
+          "range": "1400"
+        }
+      },
+      "runes": {
+        "primary": [
+          {
+            "name": "Conqueror",
+            "icon": "https://images.pexels.com/photos/6498853/pexels-photo-6498853.jpeg",
+            "category": "Precision",
+            "winRate": "49%",
+            "pickRate": "92%"
+          },
+          {
+            "name": "Triumph",
+            "icon": "https://images.pexels.com/photos/6498853/pexels-photo-6498853.jpeg",
+            "category": "Precision",
+            "winRate": "48%",
+            "pickRate": "88%"
+          },
+          {
+            "name": "Legend: Alacrity",
+            "icon": "https://images.pexels.com/photos/6498853/pexels-photo-6498853.jpeg",
+            "category": "Precision",
+            "winRate": "49%",
+            "pickRate": "78%"
+          },
+          {
+            "name": "Last Stand",
+            "icon": "https://images.pexels.com/photos/6498853/pexels-photo-6498853.jpeg",
+            "category": "Precision",
+            "winRate": "50%",
+            "pickRate": "82%"
+          }
+        ],
+        "secondary": [
+          {
+            "name": "Taste of Blood",
+            "icon": "https://images.pexels.com/photos/6498853/pexels-photo-6498853.jpeg",
+            "category": "Domination",
+            "winRate": "49%",
+            "pickRate": "75%"
+          },
+          {
+            "name": "Ravenous Hunter",
+            "icon": "https://images.pexels.com/photos/6498853/pexels-photo-6498853.jpeg",
+            "category": "Domination",
+            "winRate": "49%",
+            "pickRate": "82%"
+          }
+        ]
+      },
+      "summonerSpells": [
+        {
+          "name": "Flash",
+          "icon": "https://images.pexels.com/photos/6498853/pexels-photo-6498853.jpeg"
+        },
+        {
+          "name": "Ignite",
+          "icon": "https://images.pexels.com/photos/6498853/pexels-photo-6498853.jpeg"
+        }
+      ],
+      "build": {
+        "starters": [
+          {
+            "name": "Doran's Blade",
+            "icon": "https://images.pexels.com/photos/6498853/pexels-photo-6498853.jpeg"
+          },
+          {
+            "name": "Health Potion",
+            "icon": "https://images.pexels.com/photos/6498853/pexels-photo-6498853.jpeg"
+          }
+        ],
+        "coreItems": [
+          {
+            "name": "Berserker's Greaves",
+            "icon": "https://images.pexels.com/photos/6498853/pexels-photo-6498853.jpeg"
+          },
+          {
+            "name": "Immortal Shieldbow",
+            "icon": "https://images.pexels.com/photos/6498853/pexels-photo-6498853.jpeg"
+          },
+          {
+            "name": "Infinity Edge",
+            "icon": "https://images.pexels.com/photos/6498853/pexels-photo-6498853.jpeg"
+          }
+        ],
+        "luxuryItems": [
+          {
+            "name": "Bloodthirster",
+            "icon": "https://images.pexels.com/photos/6498853/pexels-photo-6498853.jpeg"
+          },
+          {
+            "name": "Guardian Angel",
+            "icon": "https://images.pexels.com/photos/6498853/pexels-photo-6498853.jpeg"
+          }
+        ],
+        "boots": [
+          {
+            "name": "Berserker's Greaves",
+            "icon": "https://images.pexels.com/photos/6498853/pexels-photo-6498853.jpeg"
+          }
+        ]
+      },
+      "abilityOrders": [
+        {
+          "winRate": "49.5%",
+          "pickRate": "92.1%",
+          "order": {
+            "passive": {
+              "name": "Way of the Wanderer",
+              "icon": "https://images.pexels.com/photos/6498853/pexels-photo-6498853.jpeg"
+            },
+            "abilities": [
+              {
+                "key": "Q",
+                "name": "Steel Tempest",
+                "icon": "https://images.pexels.com/photos/6498853/pexels-photo-6498853.jpeg",
+                "levels": [true, false, false, true, true, true, true, true, true, false, false, false, false, false, false, false, false, false]
+              },
+              {
+                "key": "W",
+                "name": "Wind Wall",
+                "icon": "https://images.pexels.com/photos/6498853/pexels-photo-6498853.jpeg",
+                "levels": [false, false, true, false, false, false, false, false, false, true, true, true, true, false, false, false, false, false]
+              },
+              {
+                "key": "E",
+                "name": "Sweeping Blade",
+                "icon": "https://images.pexels.com/photos/6498853/pexels-photo-6498853.jpeg",
+                "levels": [false, true, false, false, false, false, false, false, false, false, false, false, false, true, true, true, false, false]
+              },
+              {
+                "key": "R",
+                "name": "Last Breath",
+                "icon": "https://images.pexels.com/photos/6498853/pexels-photo-6498853.jpeg",
+                "levels": [false, false, false, false, false, true, false, false, false, false, false, true, false, false, false, false, true, false]
+              }
+            ]
+          }
+        }
+      ],
+      "counters": {
+        "strong": [
+          {
+            "name": "Veigar",
+            "rating": 7.8,
+            "image": "https://images.pexels.com/photos/6498853/pexels-photo-6498853.jpeg"
+          },
+          {
+            "name": "Lux",
+            "rating": 7.2,
+            "image": "https://images.pexels.com/photos/6498853/pexels-photo-6498853.jpeg"
+          },
+          {
+            "name": "Xerath",
+            "rating": 8.1,
+            "image": "https://images.pexels.com/photos/6498853/pexels-photo-6498853.jpeg"
+          }
+        ],
+        "weak": [
+          {
+            "name": "Renekton",
+            "rating": 7.8,
+            "image": "https://images.pexels.com/photos/6498853/pexels-photo-6498853.jpeg"
+          },
+          {
+            "name": "Pantheon",
+            "rating": 7.5,
+            "image": "https://images.pexels.com/photos/6498853/pexels-photo-6498853.jpeg"
+          },
+          {
+            "name": "Riven",
+            "rating": 6.9,
+            "image": "https://images.pexels.com/photos/6498853/pexels-photo-6498853.jpeg"
+          }
+        ]
+      },
+      "skins": [
+        {
+          "name": "High Noon Yasuo",
+          "image": "https://images.pexels.com/photos/6498853/pexels-photo-6498853.jpeg",
+          "price": 975,
+          "releaseDate": "2014-12-15"
+        },
+        {
+          "name": "Blood Moon Yasuo",
+          "image": "https://images.pexels.com/photos/6498853/pexels-photo-6498853.jpeg",
+          "price": 975,
+          "releaseDate": "2016-06-09"
+        },
+        {
+          "name": "Nightbringer Yasuo",
+          "image": "https://images.pexels.com/photos/6498853/pexels-photo-6498853.jpeg",
+          "price": 1820,
+          "releaseDate": "2017-06-14"
+        }
+      ]
+    }
+  ],
+  "tft": [
+    {
+      "id": "gnar",
+      "name": "Gnar",
+      "title": "The Missing Link",
+      "cost": 2,
+      "traits": ["Freljord", "Shapeshifter"],
+      "image": "https://images.pexels.com/photos/7915575/pexels-photo-7915575.jpeg",
+      "stats": {
+        "health": 700,
+        "mana": 0,
+        "armor": 45,
+        "magicResist": 45,
+        "attackDamage": 60,
+        "attackSpeed": 0.7
+      }
+    }
+  ]
+}

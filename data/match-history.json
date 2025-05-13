@@ -1,0 +1,88 @@
+{
+  "matches": [
+    {
+      "id": 1,
+      "champion": {
+        "name": "Ahri",
+        "image": "https://images.pexels.com/photos/7915264/pexels-photo-7915264.jpeg"
+      },
+      "result": "Victory",
+      "kda": "12/3/8",
+      "kdaRatio": 6.7,
+      "role": "Mid",
+      "gameType": "Ranked Solo/Duo",
+      "duration": "32:15",
+      "timestamp": "2 hours ago",
+      "items": [
+        { "id": 1, "image": "https://images.pexels.com/photos/7915264/pexels-photo-7915264.jpeg" },
+        { "id": 2, "image": "https://images.pexels.com/photos/7915575/pexels-photo-7915575.jpeg" },
+        { "id": 3, "image": "https://images.pexels.com/photos/6498853/pexels-photo-6498853.jpeg" },
+        { "id": 4, "image": "https://images.pexels.com/photos/6498304/pexels-photo-6498304.jpeg" },
+        { "id": 5, "image": "https://images.pexels.com/photos/6498900/pexels-photo-6498900.jpeg" },
+        { "id": 6, "image": "https://images.pexels.com/photos/5726807/pexels-photo-5726807.jpeg" }
+      ],
+      "team": [
+        { "name": "Player1", "champion": "Yasuo", "image": "https://images.pexels.com/photos/6498853/pexels-photo-6498853.jpeg" },
+        { "name": "Player2", "champion": "Lee Sin", "image": "https://images.pexels.com/photos/7915575/pexels-photo-7915575.jpeg" },
+        { "name": "Player3", "champion": "Lux", "image": "https://images.pexels.com/photos/7915575/pexels-photo-7915575.jpeg" },
+        { "name": "Player4", "champion": "Thresh", "image": "https://images.pexels.com/photos/6498304/pexels-photo-6498304.jpeg" }
+      ]
+    },
+    {
+      "id": 2,
+      "champion": {
+        "name": "Yasuo",
+        "image": "https://images.pexels.com/photos/6498853/pexels-photo-6498853.jpeg"
+      },
+      "result": "Defeat",
+      "kda": "8/7/5",
+      "kdaRatio": 1.9,
+      "role": "Mid",
+      "gameType": "Normal",
+      "duration": "28:45",
+      "timestamp": "5 hours ago",
+      "items": [
+        { "id": 1, "image": "https://images.pexels.com/photos/7915264/pexels-photo-7915264.jpeg" },
+        { "id": 2, "image": "https://images.pexels.com/photos/7915575/pexels-photo-7915575.jpeg" },
+        { "id": 3, "image": "https://images.pexels.com/photos/6498853/pexels-photo-6498853.jpeg" },
+        { "id": 4, "image": "https://images.pexels.com/photos/6498304/pexels-photo-6498304.jpeg" },
+        { "id": 5, "image": "https://images.pexels.com/photos/6498900/pexels-photo-6498900.jpeg" },
+        { "id": 6, "image": "https://images.pexels.com/photos/5726807/pexels-photo-5726807.jpeg" }
+      ],
+      "team": [
+        { "name": "Player1", "champion": "Ahri", "image": "https://images.pexels.com/photos/7915264/pexels-photo-7915264.jpeg" },
+        { "name": "Player2", "champion": "Lee Sin", "image": "https://images.pexels.com/photos/7915575/pexels-photo-7915575.jpeg" },
+        { "name": "Player3", "champion": "Lux", "image": "https://images.pexels.com/photos/7915575/pexels-photo-7915575.jpeg" },
+        { "name": "Player4", "champion": "Thresh", "image": "https://images.pexels.com/photos/6498304/pexels-photo-6498304.jpeg" }
+      ]
+    },
+    {
+      "id": 3,
+      "champion": {
+        "name": "Jinx",
+        "image": "https://images.pexels.com/photos/7915575/pexels-photo-7915575.jpeg"
+      },
+      "result": "Victory",
+      "kda": "15/2/10",
+      "kdaRatio": 12.5,
+      "role": "ADC",
+      "gameType": "Ranked Solo/Duo",
+      "duration": "36:22",
+      "timestamp": "1 day ago",
+      "items": [
+        { "id": 1, "image": "https://images.pexels.com/photos/7915264/pexels-photo-7915264.jpeg" },
+        { "id": 2, "image": "https://images.pexels.com/photos/7915575/pexels-photo-7915575.jpeg" },
+        { "id": 3, "image": "https://images.pexels.com/photos/6498853/pexels-photo-6498853.jpeg" },
+        { "id": 4, "image": "https://images.pexels.com/photos/6498304/pexels-photo-6498304.jpeg" },
+        { "id": 5, "image": "https://images.pexels.com/photos/6498900/pexels-photo-6498900.jpeg" },
+        { "id": 6, "image": "https://images.pexels.com/photos/5726807/pexels-photo-5726807.jpeg" }
+      ],
+      "team": [
+        { "name": "Player1", "champion": "Yasuo", "image": "https://images.pexels.com/photos/6498853/pexels-photo-6498853.jpeg" },
+        { "name": "Player2", "champion": "Lee Sin", "image": "https://images.pexels.com/photos/7915575/pexels-photo-7915575.jpeg" },
+        { "name": "Player3", "champion": "Lux", "image": "https://images.pexels.com/photos/7915575/pexels-photo-7915575.jpeg" },
+        { "name": "Player4", "champion": "Thresh", "image": "https://images.pexels.com/photos/6498304/pexels-photo-6498304.jpeg" }
+      ]
+    }
+  ]
+}

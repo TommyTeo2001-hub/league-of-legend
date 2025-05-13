@@ -1,0 +1,39 @@
+{
+  "items": [
+    {
+      "id": "infinity-edge",
+      "name": "Infinity Edge",
+      "type": "Legendary",
+      "category": "Attack",
+      "gold": {
+        "base": 3400,
+        "total": 3400,
+        "sell": 2380
+      },
+      "stats": {
+        "ad": 70,
+        "crit": 20
+      },
+      "description": "Critical strikes deal 175% damage instead of 200% damage. If you have at least 60% critical strike chance, gain 35% critical strike damage.",
+      "image": "https://images.pexels.com/photos/1034425/pexels-photo-1034425.jpeg"
+    },
+    {
+      "id": "infinity-edge 2",
+      "name": "Infinity Edge",
+      "type": "Legendary",
+      "category": "magic",
+      "gold": {
+        "base": 3400,
+        "total": 3400,
+        "sell": 2380
+      },
+      "stats": {
+        "ad": 70,
+        "crit": 20
+      },
+      "description": "Critical strikes deal 175% damage instead of 200% damage. If you have at least 60% critical strike chance, gain 35% critical strike damage.",
+      "image": "https://images.pexels.com/photos/1034425/pexels-photo-1034425.jpeg"
+    }
+
+  ]
+}
