@@ -6,41 +6,14 @@ import Image from 'next/image'
 import { Search, Filter, ChevronLeft, ChevronRight } from 'lucide-react'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
-import { fetchChampions } from '@/lib/api'
-
-// Định nghĩa interface cho API response từ BE-LOL
-interface ChampionsResponse {
-  data: Champion[]
-  total: number
-  page: number
-  limit: number
-  totalPages: number
-}
-
-// Định nghĩa interface cho Champion từ BE-LOL
-interface Champion {
-  _id?: string
-  id: string
-  name: string
-  title: string
-  imageUrl: string
-  splashUrl: string
-  stats: Record<string, number>
-  abilities: any[]
-  tags: string[]
-  counters: string[]
-  strongAgainst: string[]
-  recommendedRunes: any[]
-  recommendedItems: any[]
-  __v?: number
-}
+import { fetchChampionsLol, ChampionsResponse, ChampionData } from '@/lib/api'
 
 // Hàm helper để xác định độ khó của champion
-function getDifficulty(champion: Champion): string {
-  // Logic đơn giản để xác định độ khó dựa trên stats
-  const totalStats = Object.values(champion.stats).reduce((a: number, b: number) => a + b, 0)
-  if (totalStats > 600) return 'Cao'
-  if (totalStats > 400) return 'Trung bình'
+function getDifficulty(champion: ChampionData): string {
+  // Sử dụng thông tin difficulty từ Data Dragon API
+  const difficultyLevel = champion.info?.difficulty || 0
+  if (difficultyLevel >= 8) return 'Cao'
+  if (difficultyLevel >= 5) return 'Trung bình'
   return 'Thấp'
 }
 
@@ -56,7 +29,7 @@ export default function ChampionsPage() {
     const loadChampions = async () => {
       try {
         setLoading(true)
-        const res = await fetchChampions('league', currentPage)
+        const res = await fetchChampionsLol(currentPage, 20, searchQuery)
         setChampionsData(res)
       } catch (error) {
         console.error('Không thể tải dữ liệu tướng:', error)
@@ -66,7 +39,7 @@ export default function ChampionsPage() {
     }
 
     loadChampions()
-  }, [currentPage])
+  }, [currentPage, searchQuery])
   
   const roleMapping: Record<string, string> = {
     "Tank": "Đỡ đòn",
@@ -76,7 +49,7 @@ export default function ChampionsPage() {
     "Marksman": "Xạ thủ", 
     "Support": "Hỗ trợ"
   }
-  console.log(championsData)
+
   const roles = ["Assassin", "Fighter", "Mage", "Marksman", "Support", "Tank"]
   const difficulties = ["Thấp", "Trung bình", "Cao"]
 
@@ -99,10 +72,11 @@ export default function ChampionsPage() {
   const resetFilters = () => {
     setSelectedRoles([])
     setSelectedDifficulty('')
+    setSearchQuery('')
   }
 
-  const filteredChampions = championsData?.data?.filter((champion: Champion) => {
-    const matchesSearch = champion.name.toLowerCase().includes(searchQuery.toLowerCase())
+  const filteredChampions = championsData?.data?.champions?.filter((champion: ChampionData) => {
+    const matchesSearch = searchQuery === '' || champion.name.toLowerCase().includes(searchQuery.toLowerCase())
     
     const matchesRoles = selectedRoles.length === 0 || 
       champion.tags.some(role => selectedRoles.includes(role))
@@ -124,6 +98,16 @@ export default function ChampionsPage() {
     if (championsData && currentPage < championsData.totalPages) {
       setCurrentPage(currentPage + 1)
     }
+  }
+
+  // Function to get champion image URL
+  const getChampionImageUrl = (champion: ChampionData) => {
+    if (!champion || !champion.image) {
+      return '/placeholder-champion.png'
+    }
+    
+    // Using Data Dragon image format
+    return `https://ddragon.leagueoflegends.com/cdn/15.9.1/img/champion/${champion.image.full}`
   }
 
   return (
@@ -219,7 +203,7 @@ export default function ChampionsPage() {
               >
                 <div className="aspect-square relative overflow-hidden">
                   <Image
-                    src={champion.imageUrl || champion.splashUrl}
+                    src={getChampionImageUrl(champion)}
                     alt={champion.name}
                     fill
                     className="object-cover transition-transform group-hover:scale-110 duration-500"

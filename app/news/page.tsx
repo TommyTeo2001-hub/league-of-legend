@@ -5,30 +5,28 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { Search } from 'lucide-react'
 import { Input } from '@/components/ui/input'
-import { Badge } from '@/components/ui/badge'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Button } from '@/components/ui/button'
+import { Badge } from '@/components/ui/badge'
 import { fetchNews, NewsArticle, NewsResponse } from '@/lib/api'
 
 export default function NewsPage() {
-  const [newsData, setNewsData] = useState<NewsResponse | null>(null)
+  const [newsData, setNewsData] = useState<NewsArticle[] | null>(null)
   const [featuredNews, setFeaturedNews] = useState<NewsArticle | null>(null)
   const [searchQuery, setSearchQuery] = useState('')
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<Error | null>(null)
   const [currentPage, setCurrentPage] = useState(1)
+  const [totalPages, setTotalPages] = useState(1)
 
-  // Fetch news data from API
   useEffect(() => {
     const loadNews = async () => {
       try {
         setLoading(true)
-        const data = await fetchNews(currentPage, 10)
-        setNewsData(data)
-        
-        // Lấy bài viết nổi bật (bài đầu tiên)
-        if (data.data.length > 0) {
-          setFeaturedNews(data.data[0])
+        const res = await fetchNews(currentPage, 10)
+        setNewsData(res.data.articles)
+        setTotalPages(res.totalPages)
+        if (res.data.articles.length > 0) {
+          setFeaturedNews(res.data.articles[0])
         }
       } catch (err) {
         console.error('Lỗi khi tải tin tức:', err)
@@ -41,14 +39,13 @@ export default function NewsPage() {
     loadNews()
   }, [currentPage])
 
-  // Lọc tin tức theo searchQuery
-  const filteredNews = newsData?.data.filter(news => 
+  // Filter news by search query
+  const filteredNews = newsData?.filter(news => 
     news.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    news.excerpt.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    news.category.toLowerCase().includes(searchQuery.toLowerCase())
+    news.summary.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    (news.tags && news.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase())))
   );
 
-  // Hiển thị loading
   if (loading && !newsData) {
     return (
       <div className="container mx-auto px-4 py-8">
@@ -62,7 +59,7 @@ export default function NewsPage() {
     )
   }
 
-  // Hiển thị lỗi
+  // Show error
   if (error && !newsData) {
     return (
       <div className="container mx-auto px-4 py-8">
@@ -77,8 +74,8 @@ export default function NewsPage() {
     )
   }
 
-  // Hiển thị khi không có dữ liệu
-  if (!newsData?.data.length) {
+  // Show when no data
+  if (!newsData?.length) {
     return (
       <div className="container mx-auto px-4 py-8">
         <div className="h-64 flex items-center justify-center">
@@ -106,20 +103,7 @@ export default function NewsPage() {
     }
   };
 
-  // Hiển thị giá trị readTime hoặc giá trị mặc định
-  const getReadTime = (article: NewsArticle) => {
-    return article.readTime || '5 min read';
-  };
-
-  // Xử lý tác giả (có thể là object hoặc string)
-  const getAuthor = (article: NewsArticle) => {
-    if (typeof article.author === 'string') {
-      return article.author;
-    }
-    return article.author.name;
-  };
-
-  // Mảng tin tức còn lại (bỏ qua tin nổi bật)
+  // Get remaining news
   const remainingNews = filteredNews?.slice(featuredNews ? 1 : 0) || [];
 
   return (
@@ -147,27 +131,29 @@ export default function NewsPage() {
       {featuredNews && !searchQuery && (
         <div className="mb-12">
           <Link 
-            href={`/news/${featuredNews.id}`}
+            href={`/news/${featuredNews._id}`}
             className="block bg-[#121214] border border-[#2a2a30] rounded-xl overflow-hidden hover:border-blue-500 transition-colors"
           >
             <div className="relative h-[400px]">
               <Image
-                src={featuredNews.image}
+                src={featuredNews.imageUrl}
                 alt={featuredNews.title}
                 fill
                 className="object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#121214] to-transparent" />
               <div className="absolute bottom-0 left-0 p-8">
-                <Badge className="bg-blue-600 mb-4">{featuredNews.category}</Badge>
+                {featuredNews.tags && featuredNews.tags.length > 0 && (
+                  <div className="mb-4">
+                    <Badge className="bg-blue-600">{featuredNews.tags[0].toUpperCase()}</Badge>
+                  </div>
+                )}
                 <h2 className="text-3xl font-bold mb-4">{featuredNews.title}</h2>
-                <p className="text-gray-300 mb-4 max-w-2xl">{featuredNews.excerpt}</p>
+                <p className="text-gray-300 mb-4 max-w-2xl">{featuredNews.summary}</p>
                 <div className="flex items-center gap-4 text-sm text-gray-400">
-                  <span>{getAuthor(featuredNews)}</span>
+                  <span>{featuredNews.author.name}</span>
                   <span>•</span>
-                  <span>{formatDate(featuredNews.date)}</span>
-                  <span>•</span>
-                  <span>{getReadTime(featuredNews)}</span>
+                  <span>{formatDate(featuredNews.publishedAt)}</span>
                 </div>
               </div>
             </div>
@@ -175,176 +161,46 @@ export default function NewsPage() {
         </div>
       )}
 
-      {/* News Categories */}
-      <Tabs defaultValue="all" className="mb-16">
-        <TabsList className="bg-[#1a1a1c] border border-[#2a2a30] p-1 mb-8">
-          <TabsTrigger 
-            value="all" 
-            className="data-[state=active]:bg-blue-600 data-[state=active]:text-white"
-          >
-            Tất cả
-          </TabsTrigger>
-          <TabsTrigger 
-            value="patch" 
-            className="data-[state=active]:bg-blue-600 data-[state=active]:text-white"
-          >
-            Cập nhật
-          </TabsTrigger>
-          <TabsTrigger 
-            value="esports" 
-            className="data-[state=active]:bg-blue-600 data-[state=active]:text-white"
-          >
-            Esports
-          </TabsTrigger>
-          <TabsTrigger 
-            value="dev" 
-            className="data-[state=active]:bg-blue-600 data-[state=active]:text-white"
-          >
-            Dev
-          </TabsTrigger>
-        </TabsList>
-
-        <TabsContent value="all" className="mt-0">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {remainingNews.map((news) => (
-              <Link
-                key={news.id}
-                href={`/news/${news.id}`}
-                className="bg-[#121214] border border-[#2a2a30] rounded-xl overflow-hidden hover:border-blue-500 transition-colors"
-              >
-                <div className="relative h-48">
-                  <Image
-                    src={news.image}
-                    alt={news.title}
-                    fill
-                    className="object-cover"
-                  />
+      {/* News List */}
+      <div className="mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {remainingNews.map((news) => (
+            <Link
+              key={news._id}
+              href={`/news/${news._id}`}
+              className="bg-[#121214] border border-[#2a2a30] rounded-xl overflow-hidden hover:border-blue-500 transition-colors"
+            >
+              <div className="relative h-48">
+                <Image
+                  src={news.imageUrl}
+                  alt={news.title}
+                  fill
+                  className="object-cover"
+                />
+              </div>
+              <div className="p-6">
+                {news.tags && news.tags.length > 0 && (
+                  <div className="flex flex-wrap gap-2 mb-3">
+                    {news.tags.slice(0, 2).map(tag => (
+                      <Badge key={tag} variant="outline">{tag.toUpperCase()}</Badge>
+                    ))}
+                  </div>
+                )}
+                <h3 className="text-xl font-bold mb-2">{news.title}</h3>
+                <p className="text-gray-400 mb-4 line-clamp-2">{news.summary}</p>
+                <div className="flex items-center gap-3 text-sm text-gray-400">
+                  <span>{news.author.name}</span>
+                  <span>•</span>
+                  <span>{formatDate(news.publishedAt)}</span>
                 </div>
-                <div className="p-6">
-                  <Badge className="mb-3" variant="outline">{news.category}</Badge>
-                  <h3 className="text-xl font-bold mb-2">{news.title}</h3>
-                  <p className="text-gray-400 mb-4 line-clamp-2">{news.excerpt}</p>
-                  <div className="flex items-center gap-3 text-sm text-gray-400">
-                    <span>{getAuthor(news)}</span>
-                    <span>•</span>
-                    <span>{formatDate(news.date)}</span>
-                    <span>•</span>
-                    <span>{getReadTime(news)}</span>
-                  </div>
-                </div>
-              </Link>
-            ))}
-          </div>
-        </TabsContent>
-
-        <TabsContent value="patch" className="mt-0">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {remainingNews
-              .filter(news => news.category.toLowerCase() === "patch notes" || news.category.toLowerCase() === "cập nhật")
-              .map((news) => (
-                <Link
-                  key={news.id}
-                  href={`/news/${news.id}`}
-                  className="bg-[#121214] border border-[#2a2a30] rounded-xl overflow-hidden hover:border-blue-500 transition-colors"
-                >
-                  <div className="relative h-48">
-                    <Image
-                      src={news.image}
-                      alt={news.title}
-                      fill
-                      className="object-cover"
-                    />
-                  </div>
-                  <div className="p-6">
-                    <Badge className="mb-3" variant="outline">{news.category}</Badge>
-                    <h3 className="text-xl font-bold mb-2">{news.title}</h3>
-                    <p className="text-gray-400 mb-4 line-clamp-2">{news.excerpt}</p>
-                    <div className="flex items-center gap-3 text-sm text-gray-400">
-                      <span>{getAuthor(news)}</span>
-                      <span>•</span>
-                      <span>{formatDate(news.date)}</span>
-                      <span>•</span>
-                      <span>{getReadTime(news)}</span>
-                    </div>
-                  </div>
-                </Link>
-              ))}
-          </div>
-        </TabsContent>
-
-        <TabsContent value="esports" className="mt-0">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {remainingNews
-              .filter(news => news.category.toLowerCase() === "esports")
-              .map((news) => (
-                <Link
-                  key={news.id}
-                  href={`/news/${news.id}`}
-                  className="bg-[#121214] border border-[#2a2a30] rounded-xl overflow-hidden hover:border-blue-500 transition-colors"
-                >
-                  <div className="relative h-48">
-                    <Image
-                      src={news.image}
-                      alt={news.title}
-                      fill
-                      className="object-cover"
-                    />
-                  </div>
-                  <div className="p-6">
-                    <Badge className="mb-3" variant="outline">{news.category}</Badge>
-                    <h3 className="text-xl font-bold mb-2">{news.title}</h3>
-                    <p className="text-gray-400 mb-4 line-clamp-2">{news.excerpt}</p>
-                    <div className="flex items-center gap-3 text-sm text-gray-400">
-                      <span>{getAuthor(news)}</span>
-                      <span>•</span>
-                      <span>{formatDate(news.date)}</span>
-                      <span>•</span>
-                      <span>{getReadTime(news)}</span>
-                    </div>
-                  </div>
-                </Link>
-              ))}
-          </div>
-        </TabsContent>
-
-        <TabsContent value="dev" className="mt-0">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {remainingNews
-              .filter(news => news.category.toLowerCase() === "dev")
-              .map((news) => (
-                <Link
-                  key={news.id}
-                  href={`/news/${news.id}`}
-                  className="bg-[#121214] border border-[#2a2a30] rounded-xl overflow-hidden hover:border-blue-500 transition-colors"
-                >
-                  <div className="relative h-48">
-                    <Image
-                      src={news.image}
-                      alt={news.title}
-                      fill
-                      className="object-cover"
-                    />
-                  </div>
-                  <div className="p-6">
-                    <Badge className="mb-3" variant="outline">{news.category}</Badge>
-                    <h3 className="text-xl font-bold mb-2">{news.title}</h3>
-                    <p className="text-gray-400 mb-4 line-clamp-2">{news.excerpt}</p>
-                    <div className="flex items-center gap-3 text-sm text-gray-400">
-                      <span>{getAuthor(news)}</span>
-                      <span>•</span>
-                      <span>{formatDate(news.date)}</span>
-                      <span>•</span>
-                      <span>{getReadTime(news)}</span>
-                    </div>
-                  </div>
-                </Link>
-              ))}
-          </div>
-        </TabsContent>
-      </Tabs>
+              </div>
+            </Link>
+          ))}
+        </div>
+      </div>
 
       {/* Pagination */}
-      {newsData && newsData.totalPages > 1 && (
+      {totalPages > 1 && (
         <div className="flex justify-center my-8">
           <div className="flex gap-2">
             <Button
@@ -356,7 +212,7 @@ export default function NewsPage() {
               Trước
             </Button>
             
-            {[...Array(newsData.totalPages)].map((_, i) => (
+            {[...Array(totalPages)].map((_, i) => (
               <Button
                 key={i}
                 variant={currentPage === i + 1 ? "default" : "outline"}
@@ -369,8 +225,8 @@ export default function NewsPage() {
             
             <Button
               variant="outline"
-              onClick={() => setCurrentPage(p => Math.min(newsData.totalPages, p + 1))}
-              disabled={currentPage === newsData.totalPages}
+              onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
+              disabled={currentPage === totalPages}
               className="bg-[#1a1a1c] border-[#2a2a30]"
             >
               Tiếp

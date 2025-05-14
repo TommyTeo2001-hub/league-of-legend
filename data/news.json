@@ -1,15 +1,122 @@
 {
   "articles": [
     {
-      "id": "patch-14-9-preview",
-      "title": "Patch 14.9 Preview: Major Changes Coming to Jungle and Support Items",
-      "excerpt": "Get ready for significant updates to the jungle ecosystem and support item progression in the upcoming patch.",
-      "content": "Recent leaks from reliable sources suggest that Riot is planning major changes to jungle and support items in patch 14.9...",
-      "image": "https://images.pexels.com/photos/1034425/pexels-photo-1034425.jpeg",
-      "category": "Patch Notes",
-      "author": "Riot Phreak",
-      "date": "2024-03-20T10:30:00Z",
-      "readTime": "5 min"
+      "_id": "6822a3c93e321f701ea63d76",
+      "title": "Upcoming Events in March 2024",
+      "slug": "march-2024-events",
+      "content": "A comprehensive guide to all League of Legends events happening in March 2024.\n\nEvent Schedule:\n- MSI Qualifiers\n- Community Tournaments\n- In-game Events\n- Special Promotions\n\nMark your calendar for these exciting events!",
+      "summary": "Your complete guide to all League of Legends events and tournaments happening in March 2024.",
+      "imageUrl": "/images/news/march-events.jpg",
+      "tags": [
+        "Events",
+        "Tournaments",
+        "Community",
+        "Schedule"
+      ],
+      "author": {
+        "_id": "681dcf20cf2e99c8b82923a7",
+        "name": "Admin"
+      },
+      "published": true,
+      "publishedAt": "2024-03-13T01:43:37.810Z",
+      "viewCount": 0,
+      "createdAt": "2024-03-13T01:43:37.813Z",
+      "updatedAt": "2024-03-13T01:43:37.813Z"
+    },
+    {
+      "_id": "6822a3c93e321f701ea63d77",
+      "title": "New Champion: Briar's First Week",
+      "slug": "briar-first-week",
+      "content": "After one week in the Rift, Briar has made quite an impact on the meta.\n\nWith a 54% win rate in high ELO play, Briar is dominating the jungle position. Most players are building her with a combination of bruiser and assassin items, maximizing her unique blood rage mechanics.\n\nRiot is already considering some minor nerfs for the upcoming patch to bring her more in line with other junglers.",
+      "summary": "Analysis of Briar's first week statistics and impact on the current meta.",
+      "imageUrl": "/images/news/briar-stats.jpg",
+      "tags": [
+        "Champions",
+        "Meta",
+        "Stats",
+        "Analysis"
+      ],
+      "author": {
+        "_id": "681dcf20cf2e99c8b82923a8",
+        "name": "GameAnalyst"
+      },
+      "published": true,
+      "publishedAt": "2024-03-15T09:30:00.000Z",
+      "viewCount": 1245,
+      "createdAt": "2024-03-15T09:30:00.000Z",
+      "updatedAt": "2024-03-15T09:30:00.000Z"
+    },
+    {
+      "_id": "6822a3c93e321f701ea63d78",
+      "title": "Patch 14.6 Notes: Complete Breakdown",
+      "slug": "patch-14-6-notes",
+      "content": "Patch 14.6 brings several significant changes to League of Legends.\n\nChampion Updates:\n- Aatrox: Base AD reduced, Q damage nerfed\n- Yasuo: Wind Wall cooldown increased\n- Yuumi: Healing increased on her E\n- Zed: Shadow cooldown reduced at later levels\n\nItem Changes:\n- Eclipse: Lethality reduced\n- Goredrinker: Health increased\n\nSystem Changes:\n- Dragon soul buffs adjusted\n- Baron buff duration increased",
+      "summary": "Full breakdown of everything changing in patch 14.6, from champion balance to item adjustments.",
+      "imageUrl": "/images/news/patch-notes.jpg",
+      "tags": [
+        "Patch Notes",
+        "Balance Changes",
+        "Updates"
+      ],
+      "author": {
+        "_id": "681dcf20cf2e99c8b82923a9",
+        "name": "PatchExpert"
+      },
+      "published": true,
+      "publishedAt": "2024-03-18T14:15:00.000Z",
+      "viewCount": 3752,
+      "createdAt": "2024-03-18T14:15:00.000Z",
+      "updatedAt": "2024-03-18T14:15:00.000Z"
+    },
+    {
+      "_id": "6822a3c93e321f701ea63d79",
+      "title": "T1 vs. GenG: Match of the Year",
+      "slug": "t1-geng-match",
+      "content": "In what might be the most anticipated match of the LCK Spring Split, T1 faced off against GenG in an epic five-game series.\n\nFaker pulled out surprise picks in both games 3 and 5, catching GenG completely off guard. Meanwhile, Chovy showed why he's considered one of the best mid laners with his incredible performance on Akali.\n\nThe series culminated in a nail-biting 45-minute final game that had fans on the edge of their seats.\n\nT1 eventually secured the victory and strengthened their position at the top of the standings.",
+      "summary": "Recap of the intense five-game series between T1 and GenG in the LCK Spring Split.",
+      "imageUrl": "/images/news/t1-geng.jpg",
+      "tags": [
+        "Esports",
+        "LCK",
+        "T1",
+        "GenG"
+      ],
+      "author": {
+        "_id": "681dcf20cf2e99c8b82923aa",
+        "name": "EsportsWriter"
+      },
+      "published": true,
+      "publishedAt": "2024-03-20T18:45:00.000Z",
+      "viewCount": 8964,
+      "createdAt": "2024-03-20T18:45:00.000Z",
+      "updatedAt": "2024-03-20T18:45:00.000Z"
+    },
+    {
+      "_id": "6822a3c93e321f701ea63d80",
+      "title": "Dev Blog: The Future of League's Technology",
+      "slug": "dev-blog-technology",
+      "content": "Riot's engineering team has shared insights on upcoming technical improvements to League of Legends.\n\nKey highlights:\n\n1. New Game Engine: We're transitioning to a more modern engine that will support better graphics and physics\n\n2. Improved Netcode: Reduced latency and better prediction systems are coming in 2024\n\n3. Anti-cheat Updates: New systems to detect and prevent cheating\n\n4. Performance Optimization: Targeting lower-end systems to ensure League remains accessible\n\nThese changes will be gradually rolled out over the next year, with the first improvements coming as soon as next patch.",
+      "summary": "Riot's engineering team details upcoming technical improvements to League of Legends' engine, netcode, and more.",
+      "imageUrl": "/images/news/dev-tech.jpg",
+      "tags": [
+        "Dev",
+        "Technology",
+        "Engine",
+        "Performance"
+      ],
+      "author": {
+        "_id": "681dcf20cf2e99c8b82923ab",
+        "name": "RiotEngineer"
+      },
+      "published": true,
+      "publishedAt": "2024-03-22T11:00:00.000Z",
+      "viewCount": 5631,
+      "createdAt": "2024-03-22T11:00:00.000Z",
+      "updatedAt": "2024-03-22T11:00:00.000Z"
     }
-  ]
+  ],
+  "total": 5,
+  "page": 1,
+  "limit": 10,
+  "totalPages": 1
 }

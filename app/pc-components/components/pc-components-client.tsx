@@ -24,12 +24,12 @@ export default function PCComponentsClient() {
         const data = await fetchPCComponents(currentPage, 10)
         setComponentsData(data)
         
-        // Lấy bài viết nổi bật (bài đầu tiên)
-        if (data.data.length > 0) {
-          setFeaturedComponent(data.data[0])
+        // Get featured component (first one)
+        if (data.data.builds.length > 0) {
+          setFeaturedComponent(data.data.builds[0])
         }
       } catch (err) {
-        console.error('Lỗi khi tải dữ liệu PC components:', err)
+        console.error('Error loading PC components:', err)
         setError(err as Error)
       } finally {
         setLoading(false)
@@ -39,14 +39,14 @@ export default function PCComponentsClient() {
     loadComponents()
   }, [currentPage])
 
-  // Lọc components theo searchQuery
-  const filteredComponents = componentsData?.data.filter(component => 
-    component.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    component.excerpt.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    component.category.toLowerCase().includes(searchQuery.toLowerCase())
+  // Filter components by searchQuery
+  const filteredComponents = componentsData?.data.builds.filter(component => 
+    component.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    component.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    (component.tags && component.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase())))
   );
 
-  // Hiển thị loading
+  // Show loading state
   if (loading && !componentsData) {
     return (
       <div className="container mx-auto px-4 py-8">
@@ -60,7 +60,7 @@ export default function PCComponentsClient() {
     )
   }
 
-  // Hiển thị lỗi
+  // Show error
   if (error && !componentsData) {
     return (
       <div className="container mx-auto px-4 py-8">
@@ -75,8 +75,8 @@ export default function PCComponentsClient() {
     )
   }
 
-  // Hiển thị khi không có dữ liệu
-  if (!componentsData?.data.length) {
+  // Show when no data
+  if (!componentsData?.data.builds.length) {
     return (
       <div className="container mx-auto px-4 py-8">
         <div className="h-64 flex items-center justify-center">
@@ -98,16 +98,16 @@ export default function PCComponentsClient() {
     });
   };
 
-  // Xử lý tác giả (có thể là object hoặc string)
-  const getAuthor = (component: PCComponent) => {
-    if (typeof component.author === 'string') {
-      return component.author;
-    }
-    return component.author.name;
-  };
-
-  // Mảng components còn lại (bỏ qua featured component)
+  // Get remaining components (skip featured)
   const remainingComponents = filteredComponents?.slice(featuredComponent ? 1 : 0) || [];
+
+  // Get first tag or fallback
+  const getTypeTag = (component: PCComponent) => {
+    if (component.tags && component.tags.length > 0) {
+      return component.tags[0].toUpperCase();
+    }
+    return "PC BUILD";
+  };
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -134,25 +134,25 @@ export default function PCComponentsClient() {
       {featuredComponent && !searchQuery && (
         <div className="mb-12">
           <Link 
-            href={`/pc-components/${featuredComponent.id}`}
+            href={`/pc-components/${featuredComponent._id}`}
             className="block bg-[#121214] border border-[#2a2a30] rounded-xl overflow-hidden hover:border-blue-500 transition-colors"
           >
             <div className="relative h-[400px]">
               <Image
-                src={featuredComponent.image}
-                alt={featuredComponent.title}
+                src={featuredComponent.imageUrl}
+                alt={featuredComponent.name}
                 fill
                 className="object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#121214] to-transparent" />
               <div className="absolute bottom-0 left-0 p-8">
-                <Badge className="bg-blue-600 mb-4">{featuredComponent.category}</Badge>
-                <h2 className="text-3xl font-bold mb-4">{featuredComponent.title}</h2>
-                <p className="text-gray-300 mb-4 max-w-2xl">{featuredComponent.excerpt}</p>
+                <Badge className="bg-blue-600 mb-4">{getTypeTag(featuredComponent)}</Badge>
+                <h2 className="text-3xl font-bold mb-4">{featuredComponent.name}</h2>
+                <p className="text-gray-300 mb-4 max-w-2xl">{featuredComponent.description}</p>
                 <div className="flex items-center gap-4 text-sm text-gray-400">
-                  <span>{getAuthor(featuredComponent)}</span>
+                  <span>{featuredComponent.user?.name || 'Admin'}</span>
                   <span>•</span>
-                  <span>{formatDate(featuredComponent.date)}</span>
+                  <span>{formatDate(featuredComponent.createdAt)}</span>
                 </div>
               </div>
             </div>
@@ -160,11 +160,11 @@ export default function PCComponentsClient() {
         </div>
       )}
 
-      {/* Không có kết quả tìm kiếm */}
+      {/* No search results */}
       {filteredComponents?.length === 0 && searchQuery && (
         <div className="bg-[#121214] border border-[#2a2a30] rounded-xl p-8 text-center mb-8">
           <h2 className="text-xl font-bold mb-4">Không tìm thấy linh kiện nào</h2>
-          <p className="text-gray-400">Không có linh kiện nào phù hợp với từ khóa tìm kiếm "{searchQuery}"</p>
+          <p className="text-gray-400">Không có linh kiện nào phù hợp với từ khóa tìm kiếm &quot;{searchQuery}&quot;</p>
         </div>
       )}
 
@@ -173,26 +173,32 @@ export default function PCComponentsClient() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
           {remainingComponents.map((component) => (
             <Link
-              key={component.id}
-              href={`/pc-components/${component.id}`}
+              key={component._id}
+              href={`/pc-components/${component._id}`}
               className="bg-[#121214] border border-[#2a2a30] rounded-xl overflow-hidden hover:border-blue-500 transition-colors"
             >
               <div className="relative h-48">
                 <Image
-                  src={component.image}
-                  alt={component.title}
+                  src={component.imageUrl}
+                  alt={component.name}
                   fill
                   className="object-cover"
                 />
               </div>
               <div className="p-6">
-                <Badge className="mb-3" variant="outline">{component.category}</Badge>
-                <h3 className="text-xl font-bold mb-2">{component.title}</h3>
-                <p className="text-gray-400 mb-4 line-clamp-2">{component.excerpt}</p>
+                {component.tags && component.tags.length > 0 && (
+                  <div className="flex flex-wrap gap-2 mb-3">
+                    {component.tags.slice(0, 2).map(tag => (
+                      <Badge key={tag} variant="outline">{tag.toUpperCase()}</Badge>
+                    ))}
+                  </div>
+                )}
+                <h3 className="text-xl font-bold mb-2">{component.name}</h3>
+                <p className="text-gray-400 mb-4 line-clamp-2">{component.description}</p>
                 <div className="flex items-center gap-3 text-sm text-gray-400">
-                  <span>{getAuthor(component)}</span>
+                  <span>{component.user?.name || 'Admin'}</span>
                   <span>•</span>
-                  <span>{formatDate(component.date)}</span>
+                  <span>{formatDate(component.createdAt)}</span>
                 </div>
               </div>
             </Link>

@@ -554,7 +554,7 @@ export default function ChampionDetails({ championData }: { championData: any })
       )}
 
       {/* Comments Section */}
-      <CommentsSection />
+      <CommentsSection championId={championData.id} />
     </div>
   )
 }

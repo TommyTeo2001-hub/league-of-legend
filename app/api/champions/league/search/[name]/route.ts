@@ -22,7 +22,6 @@ interface BEChampion {
   recommendedItems?: any[];
   __v?: number;
 }
-
 const BE_LOL_API_URL = process.env.NEXT_PUBLIC_BE_LOL_API_URL
 
 export async function GET(

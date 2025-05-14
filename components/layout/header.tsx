@@ -143,9 +143,9 @@ const Header = () => {
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
                     <Button variant="ghost" size="icon" className="text-gray-300 hover:text-white hover:bg-[#1a1a1c] relative">
-                      <User className="h-5 w-5" />
+                <User className="h-5 w-5" />
                       <span className="sr-only">Menu người dùng</span>
-                    </Button>
+              </Button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="end" className="w-56 bg-[#121214] border border-[#2a2a30]">
                     <div className="px-3 py-2 text-sm font-medium text-blue-400">
@@ -170,9 +170,9 @@ const Header = () => {
                 </DropdownMenu>
               ) : (
                 <Link href="/login">
-                  <Button variant="default" className="bg-blue-600 hover:bg-blue-700 text-white">
+              <Button variant="default" className="bg-blue-600 hover:bg-blue-700 text-white">
                     Đăng nhập
-                  </Button>
+              </Button>
                 </Link>
               )}
             </div>

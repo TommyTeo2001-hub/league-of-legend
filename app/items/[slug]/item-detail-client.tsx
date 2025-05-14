@@ -25,6 +25,7 @@ type ItemDetailData = {
     price: number
   }>
   buildsInto: Array<{
+    id: string
     name: string
     image: string
     price: number
@@ -35,6 +36,11 @@ type ItemDetailData = {
   }>
   usage: string[]
   tips: string[]
+  tags: string[]
+  maps: {
+    [key: string]: boolean
+  }
+  depth: number
 }
 
 export default function ItemDetailClient({ slug }: { slug: string }) {
@@ -232,7 +238,7 @@ export default function ItemDetailClient({ slug }: { slug: string }) {
                 {itemData.buildsInto.map((item, index) => (
                   <Link
                     key={index}
-                    href={`/items/${item.name.toLowerCase().replace(/\s+/g, '-')}`}
+                    href={`/items/${item.id}`}
                     className="flex items-center gap-4 bg-[#1a1a1c] p-3 rounded-lg hover:bg-[#2a2a30] transition-colors"
                   >
                     <div className="relative w-12 h-12">
@@ -252,6 +258,66 @@ export default function ItemDetailClient({ slug }: { slug: string }) {
               </div>
             </div>
           )}
+
+          {/* Item Details */}
+          <div className="bg-[#121214] border border-[#2a2a30] rounded-xl p-6">
+            <h2 className="text-xl font-bold mb-4">Thông tin chi tiết</h2>
+            
+            {/* Item Tags */}
+            {itemData.tags && itemData.tags.length > 0 && (
+              <div className="mb-4">
+                <h3 className="text-sm text-gray-400 mb-2">Thẻ phân loại</h3>
+                <div className="flex flex-wrap gap-2">
+                  {itemData.tags.map((tag, index) => (
+                    <Badge key={index} variant="outline" className="bg-[#1a1a1c] border-[#2a2a30]">
+                      {tag}
+                    </Badge>
+                  ))}
+                </div>
+              </div>
+            )}
+            
+            {/* Item Depth */}
+            {itemData.depth && (
+              <div className="mb-4">
+                <h3 className="text-sm text-gray-400 mb-2">Cấp độ item</h3>
+                <div className="flex gap-1">
+                  {Array.from({ length: itemData.depth }).map((_, index) => (
+                    <div 
+                      key={index} 
+                      className={`h-2 w-8 rounded-full ${index === itemData.depth - 1 ? 'bg-blue-500' : 'bg-[#2a2a30]'}`}
+                    />
+                  ))}
+                </div>
+                <p className="text-sm text-gray-400 mt-1">
+                  {itemData.depth === 1 ? 'Item cơ bản' : 
+                   itemData.depth === 2 ? 'Item trung cấp' : 
+                   'Item cao cấp'}
+                </p>
+              </div>
+            )}
+            
+            {/* Maps Availability */}
+            {itemData.maps && (
+              <div>
+                <h3 className="text-sm text-gray-400 mb-2">Sẵn có trên bản đồ</h3>
+                <div className="space-y-2">
+                  <div className="flex items-center gap-2">
+                    <div className={`w-3 h-3 rounded-full ${itemData.maps['11'] ? 'bg-green-500' : 'bg-red-500'}`} />
+                    <span className="text-sm">Summoner&apos;s Rift</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <div className={`w-3 h-3 rounded-full ${itemData.maps['12'] ? 'bg-green-500' : 'bg-red-500'}`} />
+                    <span className="text-sm">ARAM</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <div className={`w-3 h-3 rounded-full ${itemData.maps['21'] ? 'bg-green-500' : 'bg-red-500'}`} />
+                    <span className="text-sm">Nexus Blitz</span>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
 
           {/* Recommended Champions */}
           {itemData.recommendedChampions && itemData.recommendedChampions.length > 0 && (

@@ -13,9 +13,12 @@ type ItemData = {
   name: string
   image: string
   price: number
+  sellPrice?: number
+  totalPrice?: number
   stats: string | { [key: string]: any }
   category: string
   description: string
+  tags?: string[]
 }
 
 const categories = [
@@ -24,6 +27,7 @@ const categories = [
   { id: 'magic', name: 'Phép thuật' },
   { id: 'defense', name: 'Phòng thủ' },
   { id: 'boots', name: 'Giày' },
+  { id: 'consumable', name: 'Tiêu Thụ' },
 ]
 
 export default function ItemsClient() {
@@ -60,10 +64,35 @@ export default function ItemsClient() {
       itemName.includes(searchTerm) || 
       itemDesc.includes(searchTerm);
     
-    const itemCategory = item.category ? item.category.toLowerCase() : '';
-    const matchesCategory = 
-      selectedCategory === 'all' || 
-      itemCategory === selectedCategory.toLowerCase();
+    // Enhanced category filtering using tags
+    let matchesCategory = selectedCategory === 'all';
+    
+    if (!matchesCategory) {
+      if (selectedCategory === 'attack' && 
+          (item.category?.toLowerCase() === 'tấn công' || 
+           item.tags?.some(tag => ['Damage', 'CriticalStrike', 'AttackSpeed'].includes(tag)))) {
+        matchesCategory = true;
+      } 
+      else if (selectedCategory === 'magic' && 
+          (item.category?.toLowerCase() === 'phép thuật' || 
+           item.tags?.some(tag => ['SpellDamage', 'Mana', 'ManaRegen', 'CooldownReduction'].includes(tag)))) {
+        matchesCategory = true;
+      } 
+      else if (selectedCategory === 'defense' && 
+          (item.category?.toLowerCase() === 'phòng thủ' || 
+           item.tags?.some(tag => ['Health', 'Armor', 'SpellBlock', 'HealthRegen'].includes(tag)))) {
+        matchesCategory = true;
+      } 
+      else if (selectedCategory === 'boots' && 
+          (item.category?.toLowerCase() === 'giày' || 
+           item.tags?.includes('Boots'))) {
+        matchesCategory = true;
+      }
+      else if (selectedCategory === 'consumable' && 
+          item.tags?.includes('Consumable')) {
+        matchesCategory = true;
+      }
+    }
     
     return matchesSearch && matchesCategory;
   });
@@ -189,9 +218,6 @@ export default function ItemsClient() {
                             .map(([key, val]) => `${key}: ${val}`)
                             .join(', ') 
                           : ''}
-                    </p>
-                    <p className="text-sm text-gray-400 line-clamp-2 text-center">
-                      {item.description}
                     </p>
                   </div>
                 </Link>

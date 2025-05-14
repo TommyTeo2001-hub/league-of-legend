@@ -21,16 +21,37 @@ export default function PCComponentDetailClient({ id }: { id: string }) {
       try {
         setLoading(true)
         const data = await fetchPCComponentById(id)
-        setComponent(data)
         
-        // Lấy các linh kiện liên quan
-        const allComponents = await fetchPCComponents(1, 4)
-        const related = allComponents.data
-          .filter((c: PCComponent) => c.id !== id)
-          .slice(0, 3)
-        setRelatedComponents(related)
+        // Ensure the component data has all required fields, adding defaults if needed
+        const sanitizedData: PCComponent = {
+          _id: data._id || id,
+          name: data.name || 'Untitled Component',
+          description: data.description || '',
+          content: data.content || '',
+          imageUrl: data.imageUrl || '/images/placeholder.jpg',
+          tags: Array.isArray(data.tags) ? data.tags : [],
+          isPublic: data.isPublic !== undefined ? data.isPublic : true,
+          user: data.user || { _id: 'user-1', name: 'Admin' },
+          createdAt: data.createdAt || new Date().toISOString(),
+          updatedAt: data.updatedAt || new Date().toISOString(),
+        }
+        
+        setComponent(sanitizedData)
+        
+        // Load related components
+        try {
+          const allComponents = await fetchPCComponents(1, 4)
+          const related = allComponents.data.builds
+            .filter((c: PCComponent) => c._id !== id)
+            .slice(0, 3)
+          setRelatedComponents(related)
+        } catch (relatedErr) {
+          console.error('Error loading related components:', relatedErr)
+          // Don't set the main error for related components failing
+          setRelatedComponents([])
+        }
       } catch (err) {
-        console.error('Lỗi khi tải dữ liệu linh kiện:', err)
+        console.error('Error loading component data:', err)
         setError(err as Error)
       } finally {
         setLoading(false)
@@ -89,24 +110,26 @@ export default function PCComponentDetailClient({ id }: { id: string }) {
 
   // Format date function
   const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString('vi-VN', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
-    });
-  };
-
-  // Xử lý tác giả (có thể là object hoặc string)
-  const getAuthor = (author: string | { name: string; image?: string }) => {
-    if (typeof author === 'string') {
-      return { name: author, image: undefined };
+    try {
+      return new Date(dateString).toLocaleDateString('vi-VN', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+      });
+    } catch (e) {
+      return 'Ngày không hợp lệ';
     }
-    return author;
   };
 
-  const authorInfo = getAuthor(component.author);
+  // Get tag badge or fallback
+  const getTagBadge = (component: PCComponent) => {
+    if (component.tags && component.tags.length > 0) {
+      return <Badge className="bg-blue-600 mb-4">{component.tags[0].toUpperCase()}</Badge>;
+    }
+    return <Badge className="bg-blue-600 mb-4">PC BUILD</Badge>;
+  };
 
-  // Fake data cho tương tác
+  // Fake data for engagement
   const engagementData = {
     likes: 245,
     shares: 89
@@ -126,26 +149,25 @@ export default function PCComponentDetailClient({ id }: { id: string }) {
       {/* Component Header */}
       <div className="relative h-[400px] rounded-xl overflow-hidden mb-8">
         <Image
-          src={component.image}
-          alt={component.title}
+          src={component.imageUrl || '/images/placeholder.jpg'}
+          alt={component.name}
           fill
           className="object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-[#121214] to-transparent" />
         <div className="absolute bottom-0 left-0 p-8">
-          <Badge className="bg-blue-600 mb-4">{component.category}</Badge>
-          <h1 className="text-4xl font-bold mb-4">{component.title}</h1>
-          <p className="text-gray-300 mb-4 max-w-2xl">{component.excerpt}</p>
+          {getTagBadge(component)}
+          <h1 className="text-4xl font-bold mb-4">{component.name}</h1>
+          <p className="text-gray-300 mb-4 max-w-2xl">{component.description}</p>
           <div className="flex items-center gap-4">
             <div className="flex items-center gap-3">
               <Avatar>
-                <AvatarImage src={authorInfo.image} />
-                <AvatarFallback>{authorInfo.name[0]}</AvatarFallback>
+                <AvatarFallback>{component.user?.name?.[0] || 'A'}</AvatarFallback>
               </Avatar>
               <div>
-                <div className="font-medium">{authorInfo.name}</div>
+                <div className="font-medium">{component.user?.name || 'Admin'}</div>
                 <div className="text-sm text-gray-400">
-                  {formatDate(component.date)}
+                  {formatDate(component.createdAt)}
                 </div>
               </div>
             </div>
@@ -157,56 +179,20 @@ export default function PCComponentDetailClient({ id }: { id: string }) {
         {/* Main Content */}
         <div className="lg:col-span-8">
           <div className="bg-[#121214] border border-[#2a2a30] rounded-xl p-8 mb-8">
-            {/* Specifications if available */}
-            {component.specifications && Object.keys(component.specifications).length > 0 && (
+            {/* Tags */}
+            {component.tags && component.tags.length > 0 && (
               <div className="mb-6">
-                <h2 className="text-xl font-bold mb-4">Thông số kỹ thuật</h2>
-                <div className="bg-[#1a1a1c] rounded-lg p-4">
-                  <dl className="divide-y divide-[#2a2a30]">
-                    {Object.entries(component.specifications).map(([key, value]) => (
-                      <div key={key} className="grid grid-cols-3 py-3 gap-2">
-                        <dt className="text-gray-400">{key}</dt>
-                        <dd className="col-span-2 text-white">{value}</dd>
-                      </div>
-                    ))}
-                  </dl>
-                </div>
-              </div>
-            )}
-
-            {/* Price if available */}
-            {component.price && (
-              <div className="mb-6">
-                <h2 className="text-xl font-bold mb-2">Giá tham khảo</h2>
-                <div className="text-2xl font-bold text-blue-500">
-                  {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(component.price)}
-                </div>
-              </div>
-            )}
-
-            {/* Rating if available */}
-            {component.rating && (
-              <div className="mb-6">
-                <h2 className="text-xl font-bold mb-2">Đánh giá</h2>
-                <div className="flex items-center gap-2">
-                  <div className="text-xl font-bold">{component.rating}/5</div>
-                  <div className="text-yellow-400 flex">
-                    {[...Array(5)].map((_, i) => (
-                      <svg key={i} className={`w-5 h-5 ${i < Math.floor(component.rating || 0) ? 'fill-current' : 'stroke-current fill-none'}`} viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
-                      </svg>
-                    ))}
-                  </div>
+                <h2 className="text-xl font-bold mb-4">Tags</h2>
+                <div className="flex flex-wrap gap-2">
+                  {component.tags.map((tag) => (
+                    <Badge key={tag} variant="outline">{tag}</Badge>
+                  ))}
                 </div>
               </div>
             )}
 
             <div className="prose prose-invert max-w-none">
-              {component.content.split('\n\n').map((paragraph, index) => (
-                <p key={index} className="mb-4 text-gray-300 leading-relaxed">
-                  {paragraph}
-                </p>
-              ))}
+              <div className="mb-8 text-gray-300" dangerouslySetInnerHTML={{ __html: component.content.replace(/\n/g, '<br/>') }} />
             </div>
           </div>
 
@@ -236,56 +222,59 @@ export default function PCComponentDetailClient({ id }: { id: string }) {
 
         {/* Sidebar */}
         <div className="lg:col-span-4 space-y-8">
-          {/* Author Card */}
+          {/* Author Info */}
           <div className="bg-[#121214] border border-[#2a2a30] rounded-xl p-6">
             <div className="flex items-center gap-4 mb-4">
               <Avatar className="h-16 w-16">
-                <AvatarImage src={authorInfo.image} />
-                <AvatarFallback>{authorInfo.name[0]}</AvatarFallback>
+                <AvatarFallback>{component.user?.name?.[0] || 'A'}</AvatarFallback>
               </Avatar>
               <div>
-                <h3 className="font-bold text-lg">{authorInfo.name}</h3>
-                <p className="text-gray-400">Chuyên gia phần cứng</p>
+                <h3 className="font-bold text-lg">{component.user?.name || 'Admin'}</h3>
+                <p className="text-gray-400">Tác giả</p>
               </div>
             </div>
-            <p className="text-gray-300 mb-4">
-              Chuyên gia về phần cứng và các linh kiện PC cao cấp. Đưa tin mới nhất về công nghệ và xu hướng linh kiện.
+            <p className="text-gray-400 mb-4">
+              Chia sẻ thông tin và đánh giá về linh kiện và xây dựng PC.
             </p>
-            <Button className="w-full">Theo dõi tác giả</Button>
+          </div>
+
+          {/* Status */}
+          <div className="bg-[#121214] border border-[#2a2a30] rounded-xl p-6">
+            <h3 className="font-bold text-lg mb-4">Trạng thái</h3>
+            <div className="flex items-center gap-2 text-green-500">
+              <div className="w-3 h-3 rounded-full bg-green-500"></div>
+              <span>Đã đăng tải</span>
+            </div>
           </div>
 
           {/* Related Components */}
-          <div className="bg-[#121214] border border-[#2a2a30] rounded-xl p-6">
-            <h3 className="font-bold text-lg mb-4">Linh kiện liên quan</h3>
-            <div className="space-y-4">
-              {relatedComponents.map((related) => (
-                <Link
-                  key={related.id}
-                  href={`/pc-components/${related.id}`}
-                  className="block group"
-                >
-                  <div className="flex gap-4">
-                    <div className="relative w-20 h-20 flex-shrink-0">
+          {relatedComponents.length > 0 && (
+            <div className="bg-[#121214] border border-[#2a2a30] rounded-xl p-6">
+              <h3 className="font-bold text-lg mb-4">Bài viết liên quan</h3>
+              <div className="space-y-4">
+                {relatedComponents.map((relatedComponent) => (
+                  <Link 
+                    key={relatedComponent._id}
+                    href={`/pc-components/${relatedComponent._id}`}
+                    className="flex items-center gap-3 hover:bg-[#1a1a1c] p-2 rounded-lg transition-colors"
+                  >
+                    <div className="relative w-16 h-16 flex-shrink-0">
                       <Image
-                        src={related.image}
-                        alt={related.title}
+                        src={relatedComponent.imageUrl || '/images/placeholder.jpg'}
+                        alt={relatedComponent.name}
                         fill
-                        className="object-cover rounded-lg"
+                        className="object-cover rounded-md"
                       />
                     </div>
                     <div>
-                      <h4 className="font-medium group-hover:text-blue-400 transition-colors line-clamp-2">
-                        {related.title}
-                      </h4>
-                      <div className="text-sm text-gray-400 mt-1">
-                        {formatDate(related.date)}
-                      </div>
+                      <h4 className="font-medium">{relatedComponent.name}</h4>
+                      <p className="text-sm text-gray-400 line-clamp-1">{relatedComponent.description}</p>
                     </div>
-                  </div>
-                </Link>
-              ))}
+                  </Link>
+                ))}
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </div>
     </div>

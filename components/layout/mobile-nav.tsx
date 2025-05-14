@@ -148,8 +148,8 @@ const MobileNav: React.FC<MobileNavProps> = ({ onClose }) => {
                   </Button>
                   <Button variant="ghost" size="icon" className="text-gray-300 hover:text-white hover:bg-[#1a1a1c]">
                     <User className="h-5 w-5" />
-                  </Button>
-                </div>
+              </Button>
+            </div>
                 
                 <Link 
                   href="/login" 

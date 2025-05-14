@@ -1,11 +1,10 @@
 "use client"
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Badge } from '@/components/ui/badge'
 import MatchDetailsModal from './match-details-modal'
-import { fetchMatchHistory } from '@/lib/api'
 
 type MatchItem = {
   id: number
@@ -18,7 +17,7 @@ type TeamMember = {
   image: string
 }
 
-type Match = {
+export type Match = {
   id: number
   champion: {
     name: string
@@ -35,33 +34,20 @@ type Match = {
   team: TeamMember[]
 }
 
-export default function MatchList() {
+type MatchListProps = {
+  matches: Match[];
+  loading: boolean;
+  error: Error | null;
+}
+
+export default function MatchList({ matches, loading, error }: MatchListProps) {
   const [selectedMatch, setSelectedMatch] = useState<Match | null>(null)
-  const [matches, setMatches] = useState<Match[]>([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<Error | null>(null)
-
-  useEffect(() => {
-    const loadMatches = async () => {
-      try {
-        setLoading(true)
-        const data = await fetchMatchHistory()
-        setMatches(data)
-      } catch (err) {
-        console.error('Lỗi khi tải dữ liệu match history:', err)
-        setError(err as Error)
-      } finally {
-        setLoading(false)
-      }
-    }
-
-    loadMatches()
-  }, [])
 
   if (loading) {
     return (
       <div className="space-y-4">
         <div className="bg-[#121214] border border-[#2a2a30] rounded-xl p-8 text-center">
+          <div className="w-12 h-12 border-4 border-t-blue-500 border-blue-200 rounded-full animate-spin mx-auto mb-4"></div>
           <h2 className="text-xl font-bold text-white mb-4">Đang tải...</h2>
           <p className="text-gray-300">Vui lòng đợi trong giây lát</p>
         </div>
@@ -91,7 +77,7 @@ export default function MatchList() {
         <div className="bg-[#121214] border border-[#2a2a30] rounded-xl p-8 text-center">
           <h2 className="text-xl font-bold text-white mb-4">Không có dữ liệu</h2>
           <p className="text-gray-300">
-            Hiện không có lịch sử trận đấu nào.
+            Không tìm thấy lịch sử trận đấu. Hãy thử tìm kiếm một người chơi khác hoặc kiểm tra lại Riot ID.
           </p>
         </div>
       </div>

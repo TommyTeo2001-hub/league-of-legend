@@ -2,7 +2,7 @@
   "articles": [
     {
       "id": "rtx-4090-super-leak",
-      "title": "NVIDIA GeForce RTX 4090 Super Rumored for Early 2024",
+      "title": "NVIDIA GeForce RTX 4090 Super",
       "excerpt": "New leaks suggest NVIDIA is preparing to launch an even more powerful variant of its flagship GPU.",
       "content": "Recent leaks from reliable sources suggest that NVIDIA is gearing up to launch a Super variant of its flagship RTX 4090 graphics card in early 2024...",
       "image": "https://images.pexels.com/photos/1034425/pexels-photo-1034425.jpeg",
@@ -11,7 +11,54 @@
         "name": "TechReviewer",
         "image": "https://images.pexels.com/photos/2582937/pexels-photo-2582937.jpeg"
       },
-      "date": "2024-03-20T10:30:00Z"
+      "date": "2024-03-20T10:30:00Z",
+      "price": 1999.99,
+      "specifications": {
+        "CUDA Cores": "18,176",
+        "Memory": "24GB GDDR6X",
+        "Memory Interface": "384-bit",
+        "Boost Clock": "2.62 GHz"
+      }
+    },
+    {
+      "id": "ryzen-9-9900x-leak",
+      "title": "AMD Ryzen 9 9900X",
+      "excerpt": "AMD's next-generation Ryzen processors could bring significant IPC improvements and higher core counts.",
+      "content": "According to industry insiders, AMD's upcoming Ryzen 9 9900X is set to feature a new core architecture with substantial IPC gains and potentially up to 24 cores for mainstream desktop platforms...",
+      "image": "https://images.pexels.com/photos/3520694/pexels-photo-3520694.jpeg",
+      "category": "CPU",
+      "author": {
+        "name": "HardwareAnalyst",
+        "image": "https://images.pexels.com/photos/2379005/pexels-photo-2379005.jpeg"
+      },
+      "date": "2024-03-15T09:45:00Z",
+      "price": 599.99,
+      "specifications": {
+        "Cores/Threads": "24/48",
+        "Base Clock": "4.2 GHz",
+        "Boost Clock": "5.8 GHz",
+        "TDP": "170W"
+      }
+    },
+    {
+      "id": "samsung-990-pro-review",
+      "title": "Samsung 990 PRO 4TB",
+      "excerpt": "Samsung's latest NVMe SSD offers unprecedented speeds and improved power efficiency.",
+      "content": "The Samsung 990 PRO represents the pinnacle of consumer-grade storage technology, offering sequential read speeds of up to 7,450 MB/s and write speeds of 6,900 MB/s...",
+      "image": "https://images.pexels.com/photos/3520694/pexels-photo-3520694.jpeg",
+      "category": "STORAGE",
+      "author": {
+        "name": "StorageExpert",
+        "image": "https://images.pexels.com/photos/2379005/pexels-photo-2379005.jpeg"
+      },
+      "date": "2024-03-10T14:30:00Z",
+      "price": 349.99,
+      "specifications": {
+        "Capacity": "4TB",
+        "Interface": "PCIe 4.0 x4",
+        "Sequential Read": "7,450 MB/s",
+        "Sequential Write": "6,900 MB/s"
+      }
     }
   ]
 }

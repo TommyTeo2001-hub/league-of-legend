@@ -1,4 +1,41 @@
-import { BEChampion, BEChampionAbility } from './api';
+// Define the BE champion interface to support all Dragon API fields
+export interface BEChampion {
+  _id?: string;
+  id: string;
+  name: string;
+  title: string;
+  imageUrl: string;
+  splashUrl: string;
+  stats: Record<string, number>;
+  abilities: BEChampionAbility[];
+  tags: string[];
+  counters?: string[];
+  strongAgainst?: string[];
+  recommendedRunes?: any[];
+  recommendedItems?: any[];
+  __v?: number;
+  // Additional Data Dragon API fields
+  lore?: string;
+  blurb?: string;
+  allytips?: string[];
+  enemytips?: string[];
+  skins?: Array<{
+    name: string;
+    image: string;
+    price: number;
+    releaseDate: string;
+  }>;
+  partype?: string;
+}
+
+export interface BEChampionAbility {
+  name: string;
+  description: string;
+  imageUrl: string;
+  cooldown?: string;
+  cost?: string;
+  range?: string;
+}
 
 // Define the frontend champion interface
 export interface FrontendChampion {
@@ -31,6 +68,18 @@ export interface FrontendChampion {
       cost?: string;
       cooldown?: string;
       range?: string;
+      tooltip?: string;
+      cooldownBurn?: string;
+      costBurn?: string;
+      rangeBurn?: string;
+      resource?: string;
+      maxrank?: number;
+      leveltip?: {
+        label: string[];
+        effect: string[];
+      };
+      cooldownArray?: number[];
+      costArray?: number[];
     };
   };
   counters: {
@@ -99,6 +148,18 @@ export interface FrontendChampion {
       }>;
     };
   }>;
+  // Additional fields from Data Dragon API
+  lore?: string;
+  blurb?: string;
+  allytips?: string[];
+  enemytips?: string[];
+  skins?: Array<{
+    name: string;
+    image: string;
+    price: number;
+    releaseDate: string;
+  }>;
+  partype?: string;
 }
 
 // Helper function to determine champion role from tags
@@ -285,7 +346,7 @@ export function mapBEChampionToFrontend(beChampion: BEChampion): FrontendChampio
     pickRate: placeholderData.pickRate || '10.0%',
     winRate: placeholderData.winRate || '50.0%',
     banRate: placeholderData.banRate || '5.0%',
-    patch: placeholderData.patch || '13.7',
+    patch: placeholderData.patch || '15.9',
     matchesScanned: placeholderData.matchesScanned || '10,000+',
     counters: placeholderData.counters || { strong: [], weak: [] },
     runes: placeholderData.runes || {
@@ -307,11 +368,11 @@ export function mapBEChampionToFrontend(beChampion: BEChampion): FrontendChampio
     summonerSpells: placeholderData.summonerSpells || [
       {
         name: 'Flash',
-        icon: 'https://ddragon.leagueoflegends.com/cdn/13.7.1/img/spell/SummonerFlash.png'
+        icon: 'https://ddragon.leagueoflegends.com/cdn/15.9.1/img/spell/SummonerFlash.png'
       },
       {
         name: 'Ignite',
-        icon: 'https://ddragon.leagueoflegends.com/cdn/13.7.1/img/spell/SummonerDot.png'
+        icon: 'https://ddragon.leagueoflegends.com/cdn/15.9.1/img/spell/SummonerDot.png'
       }
     ],
     build: placeholderData.build || {
@@ -355,7 +416,14 @@ export function mapBEChampionToFrontend(beChampion: BEChampion): FrontendChampio
           }
         ]
       }
-    }]
+    }],
+    // Additional fields from Data Dragon API
+    lore: beChampion.lore,
+    blurb: beChampion.blurb,
+    allytips: beChampion.allytips,
+    enemytips: beChampion.enemytips,
+    skins: beChampion.skins,
+    partype: beChampion.partype
   };
 
   return frontendChampion;

@@ -1,10 +1,11 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Button } from '@/components/ui/button'
 import { Textarea } from '@/components/ui/textarea'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { MessageSquare, ThumbsUp, Flag, Reply, Loader2 } from 'lucide-react'
 import { useParams } from 'next/navigation'
 import { useToast } from '@/components/ui/use-toast'
+import { Badge } from '@/components/ui/badge'
 
 type Comment = {
   _id: string
@@ -41,6 +42,7 @@ export default function CommentsSection({ championId }: SectionProps) {
   const [page, setPage] = useState(1)
   const [hasMore, setHasMore] = useState(true)
   const [totalComments, setTotalComments] = useState(0)
+  const commentRef = useRef<HTMLDivElement>(null)
 
   const slug = championId || params.slug
 
@@ -66,7 +68,7 @@ export default function CommentsSection({ championId }: SectionProps) {
     }
     
     // Tải comments từ API
-    fetchComments()
+    fetchComments(1)
   }, [slug])
 
   const fetchComments = async (pageNum = 1) => {
@@ -76,11 +78,11 @@ export default function CommentsSection({ championId }: SectionProps) {
     setError(null)
     
     try {
-      // Sử dụng API route đã được cập nhật để trỏ đến /news/:newsId
-      const response = await fetch(`/api/comments/champion/${slug}?page=${pageNum}&limit=10`)
+      // Sử dụng API chung cho comments với type=champion và ID là slug của tướng
+      const response = await fetch(`/api/comments?type=champion&id=${slug}&page=${pageNum}&limit=10`)
       
       if (!response.ok) {
-        throw new Error('Failed to fetch comments')
+        throw new Error(`Không thể tải bình luận: ${response.status}`)
       }
       
       const data: CommentsResponse = await response.json()
@@ -96,7 +98,7 @@ export default function CommentsSection({ championId }: SectionProps) {
       setPage(pageNum)
       
     } catch (err) {
-      console.error('Error fetching comments:', err)
+      console.error('Lỗi khi tải bình luận:', err)
       setError('Không thể tải bình luận. Vui lòng thử lại sau.')
     } finally {
       setIsLoading(false)
@@ -129,14 +131,16 @@ export default function CommentsSection({ championId }: SectionProps) {
         method: 'POST',
         headers,
         body: JSON.stringify({
-          newsId: slug, // Sử dụng slug tướng làm newsId
+          type: 'champion',
+          id: slug,
           authorName: isLoggedIn ? userName : 'Khách',
           content: newComment,
         })
       })
       
       if (!response.ok) {
-        throw new Error('Failed to post comment')
+        const errorData = await response.json()
+        throw new Error(errorData.message || 'Không thể đăng bình luận')
       }
       
       const data = await response.json()
@@ -147,14 +151,26 @@ export default function CommentsSection({ championId }: SectionProps) {
       
       // Cập nhật tổng số comments
       setTotalComments(prev => prev + 1)
+      
+      // Cuộn đến comment mới
+      if (commentRef.current) {
+        commentRef.current.scrollIntoView({ behavior: 'smooth' })
+      }
+      
       toast({
         title: "Bình luận thành công",
         description: "Bình luận của bạn đã được đăng",
+        variant: "default",
       })
       
-    } catch (err) {
-      console.error('Error posting comment:', err)
-      setError('Không thể đăng bình luận. Vui lòng thử lại sau.')
+    } catch (err: any) {
+      console.error('Lỗi khi đăng bình luận:', err)
+      setError(err.message || 'Không thể đăng bình luận. Vui lòng thử lại sau.')
+      toast({
+        title: "Lỗi khi đăng bình luận",
+        description: err.message || "Có vấn đề khi đăng bình luận của bạn",
+        variant: "destructive",
+      })
     } finally {
       setIsSubmitting(false)
     }
@@ -162,18 +178,26 @@ export default function CommentsSection({ championId }: SectionProps) {
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString)
-    return date.toLocaleDateString('vi-VN', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit'
-    })
+    try {
+      return date.toLocaleDateString('vi-VN', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+      })
+    } catch (e) {
+      return dateString
+    }
   }
   
   const handleLikeComment = async (commentId: string) => {
     if (!isLoggedIn) {
-      setError('Bạn cần đăng nhập để thích bình luận')
+      toast({
+        title: "Yêu cầu đăng nhập",
+        description: "Bạn cần đăng nhập để thích bình luận",
+        variant: "destructive",
+      })
       return
     }
     
@@ -188,7 +212,8 @@ export default function CommentsSection({ championId }: SectionProps) {
       })
       
       if (!response.ok) {
-        throw new Error('Failed to like comment')
+        const errorData = await response.json()
+        throw new Error(errorData.message || 'Không thể thích bình luận')
       }
       
       const data = await response.json()
@@ -207,17 +232,52 @@ export default function CommentsSection({ championId }: SectionProps) {
         variant: "default",
       })
       
-    } catch (err) {
-      console.error('Error liking comment:', err)
-      setError('Không thể thích bình luận. Vui lòng thử lại sau.')
+    } catch (err: any) {
+      console.error('Lỗi khi thích bình luận:', err)
+      toast({
+        title: "Lỗi khi thích bình luận",
+        description: err.message || "Có vấn đề khi thích bình luận này",
+        variant: "destructive",
+      })
     }
   }
 
+  // Lấy chữ cái đầu của tên người dùng
+  const getInitials = (name: string) => {
+    return name
+      .split(' ')
+      .map(part => part[0])
+      .join('')
+      .toUpperCase()
+      .substring(0, 2);
+  }
+
+  // Tạo màu ngẫu nhiên cho avatar dựa trên tên tác giả
+  const getAvatarColor = (name: string) => {
+    const colors = [
+      'bg-blue-500', 'bg-green-500', 'bg-purple-500', 
+      'bg-pink-500', 'bg-yellow-500', 'bg-red-500'
+    ];
+    
+    // Hàm băm đơn giản để có màu nhất quán cho cùng một tên
+    const hash = name.split('').reduce((acc, char) => {
+      return acc + char.charCodeAt(0);
+    }, 0);
+    
+    return colors[hash % colors.length];
+  }
+  
   return (
-    <div className="bg-[#121214] border border-[#2a2a30] rounded-xl p-6 mb-8">
-      <div className="flex items-center gap-2 mb-6">
-        <MessageSquare className="h-5 w-5 text-blue-400" />
-        <h2 className="text-2xl font-bold">Bình luận</h2>
+    <div className="bg-[#121214] border border-[#2a2a30] rounded-xl p-6 mb-8" ref={commentRef}>
+      <div className="flex items-center justify-between mb-6">
+        <div className="flex items-center gap-2">
+          <MessageSquare className="h-5 w-5 text-blue-400" />
+          <h2 className="text-2xl font-bold">Bình luận</h2>
+        </div>
+        
+        <Badge variant="outline" className="bg-[#1a1a1c] border-[#2a2a30]">
+          {totalComments} bình luận
+        </Badge>
       </div>
 
       {/* Comment Form */}
@@ -228,20 +288,28 @@ export default function CommentsSection({ championId }: SectionProps) {
           onChange={(e) => setNewComment(e.target.value)}
           className="mb-4 bg-[#1a1a1c] border-[#2a2a30] focus-visible:ring-blue-500 min-h-[100px]"
         />
-        <Button 
-          onClick={handleSubmitComment}
-          disabled={isSubmitting || !newComment.trim()}
-          className="bg-blue-600 hover:bg-blue-700"
-        >
-          {isSubmitting ? (
-            <>
-              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-              Đang đăng...
-            </>
-          ) : (
-            'Đăng bình luận'
+        <div className="flex justify-between items-center">
+          <Button 
+            onClick={handleSubmitComment}
+            disabled={isSubmitting || !newComment.trim()}
+            className="bg-blue-600 hover:bg-blue-700"
+          >
+            {isSubmitting ? (
+              <>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                Đang đăng...
+              </>
+            ) : (
+              'Đăng bình luận'
+            )}
+          </Button>
+          
+          {!isLoggedIn && (
+            <span className="text-sm text-gray-400">
+              Bạn đang đăng bình luận với tư cách khách
+            </span>
           )}
-        </Button>
+        </div>
       </div>
 
       {/* Error message */}
@@ -253,121 +321,123 @@ export default function CommentsSection({ championId }: SectionProps) {
 
       {/* Comments List */}
       <div className="space-y-6">
-        {isLoading && page === 1 ? (
-          <div className="flex justify-center items-center py-12">
-            <Loader2 className="h-8 w-8 animate-spin text-blue-400" />
-          </div>
-        ) : comments.length === 0 ? (
-          <div className="text-center py-8 text-gray-400">
-            Chưa có bình luận nào. Hãy là người đầu tiên chia sẻ ý kiến!
+        {comments.length === 0 && !isLoading ? (
+          <div className="text-center py-10 text-gray-400">
+            <MessageSquare className="h-10 w-10 mx-auto mb-3 opacity-50" />
+            <p>Chưa có bình luận nào. Hãy là người đầu tiên bình luận!</p>
           </div>
         ) : (
-          <>
-            <div className="text-sm text-gray-400 mb-2">
-              {totalComments} bình luận
-            </div>
-            
-            {comments.map((comment) => (
-              <div key={comment._id} className="space-y-4">
-                {/* Main Comment */}
-                <div className="bg-[#1a1a1c] rounded-lg p-4">
-                  <div className="flex items-start gap-4">
-                    <Avatar className="h-10 w-10">
-                      <AvatarImage src={`https://avatars.dicebear.com/api/adventurer/${comment.authorName}.svg`} />
-                      <AvatarFallback>{comment.authorName[0]}</AvatarFallback>
-                    </Avatar>
-                    <div className="flex-grow">
-                      <div className="flex items-center justify-between mb-2">
-                        <div>
-                          <div className="font-medium">{comment.authorName}</div>
-                          <div className="text-sm text-gray-400">{formatDate(comment.createdAt)}</div>
-                        </div>
-                        <Button variant="ghost" size="icon" className="text-gray-400 hover:text-gray-300">
-                          <Flag className="h-4 w-4" />
-                        </Button>
-                      </div>
-                      <p className="text-gray-200 mb-3">{comment.content}</p>
-                      <div className="flex items-center gap-4">
-                        <Button 
-                          variant="ghost" 
-                          size="sm" 
-                          className="text-gray-400 hover:text-blue-400 gap-2"
-                          onClick={() => handleLikeComment(comment._id)}
-                        >
-                          <ThumbsUp className="h-4 w-4" />
-                          <span>{comment.likes || 0}</span>
-                        </Button>
-                        <Button variant="ghost" size="sm" className="text-gray-400 hover:text-blue-400 gap-2">
-                          <Reply className="h-4 w-4" />
-                          <span>Trả lời</span>
-                        </Button>
-                      </div>
+          comments.map(comment => (
+            <div key={comment._id} className="bg-[#1a1a1c]/60 rounded-lg p-5">
+              <div className="flex gap-3">
+                <Avatar className="h-10 w-10 border border-[#2a2a30]">
+                  <AvatarFallback className={getAvatarColor(comment.authorName)}>
+                    {getInitials(comment.authorName)}
+                  </AvatarFallback>
+                </Avatar>
+                
+                <div className="flex-1">
+                  <div className="flex justify-between items-start">
+                    <div>
+                      <p className="font-medium">{comment.authorName}</p>
+                      <p className="text-xs text-gray-400">{formatDate(comment.createdAt)}</p>
                     </div>
+                    
+                    <Button variant="ghost" size="icon" className="h-7 w-7">
+                      <Flag className="h-4 w-4 text-gray-400" />
+                    </Button>
                   </div>
-                </div>
-
-                {/* Replies */}
-                {comment.replies && comment.replies.length > 0 && (
-                  <div className="ml-12 space-y-4">
-                    {comment.replies.map((reply) => (
-                      <div key={reply._id} className="bg-[#1a1a1c] rounded-lg p-4">
-                        <div className="flex items-start gap-4">
-                          <Avatar className="h-8 w-8">
-                            <AvatarImage src={`https://avatars.dicebear.com/api/adventurer/${reply.authorName}.svg`} />
-                            <AvatarFallback>{reply.authorName[0]}</AvatarFallback>
-                          </Avatar>
-                          <div className="flex-grow">
-                            <div className="flex items-center justify-between mb-2">
-                              <div>
-                                <div className="font-medium">{reply.authorName}</div>
-                                <div className="text-sm text-gray-400">{formatDate(reply.createdAt)}</div>
+                  
+                  <div className="mt-3 text-gray-300 whitespace-pre-wrap">
+                    {comment.content}
+                  </div>
+                  
+                  <div className="mt-4 flex items-center gap-4">
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="h-7 text-xs gap-1.5"
+                      onClick={() => handleLikeComment(comment._id)}
+                    >
+                      <ThumbsUp className="h-3.5 w-3.5" />
+                      {comment.likes && comment.likes > 0 ? comment.likes : 'Thích'}
+                    </Button>
+                    
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="h-7 text-xs gap-1.5"
+                    >
+                      <Reply className="h-3.5 w-3.5" />
+                      Trả lời
+                    </Button>
+                  </div>
+                  
+                  {/* Nested replies */}
+                  {comment.replies && comment.replies.length > 0 && (
+                    <div className="mt-4 pl-5 border-l border-[#2a2a30] space-y-4">
+                      {comment.replies.map(reply => (
+                        <div key={reply._id} className="pt-4">
+                          <div className="flex gap-3">
+                            <Avatar className="h-8 w-8 border border-[#2a2a30]">
+                              <AvatarFallback className={getAvatarColor(reply.authorName)}>
+                                {getInitials(reply.authorName)}
+                              </AvatarFallback>
+                            </Avatar>
+                            
+                            <div className="flex-1">
+                              <div className="flex justify-between items-start">
+                                <div>
+                                  <p className="font-medium text-sm">{reply.authorName}</p>
+                                  <p className="text-xs text-gray-400">{formatDate(reply.createdAt)}</p>
+                                </div>
                               </div>
-                              <Button variant="ghost" size="icon" className="text-gray-400 hover:text-gray-300">
-                                <Flag className="h-4 w-4" />
-                              </Button>
-                            </div>
-                            <p className="text-gray-200 mb-3">{reply.content}</p>
-                            <div className="flex items-center gap-4">
-                              <Button 
-                                variant="ghost" 
-                                size="sm" 
-                                className="text-gray-400 hover:text-blue-400 gap-2"
-                                onClick={() => handleLikeComment(reply._id)}
-                              >
-                                <ThumbsUp className="h-4 w-4" />
-                                <span>{reply.likes || 0}</span>
-                              </Button>
+                              
+                              <div className="mt-2 text-gray-300 text-sm whitespace-pre-wrap">
+                                {reply.content}
+                              </div>
+                              
+                              <div className="mt-3 flex items-center gap-4">
+                                <Button
+                                  variant="ghost"
+                                  size="sm"
+                                  className="h-6 text-xs gap-1.5"
+                                  onClick={() => handleLikeComment(reply._id)}
+                                >
+                                  <ThumbsUp className="h-3 w-3" />
+                                  {reply.likes && reply.likes > 0 ? reply.likes : 'Thích'}
+                                </Button>
+                              </div>
                             </div>
                           </div>
                         </div>
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </div>
-            ))}
-            
-            {/* Load More Button */}
-            {hasMore && (
-              <div className="flex justify-center pt-4">
-                <Button
-                  variant="outline"
-                  onClick={loadMoreComments}
-                  disabled={isLoading}
-                  className="bg-transparent border-[#2a2a30] hover:bg-[#1a1a1c]"
-                >
-                  {isLoading && page > 1 ? (
-                    <>
-                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                      Đang tải...
-                    </>
-                  ) : (
-                    'Tải thêm bình luận'
+                      ))}
+                    </div>
                   )}
-                </Button>
+                </div>
               </div>
-            )}
-          </>
+            </div>
+          ))
+        )}
+        
+        {/* Loading indicator */}
+        {isLoading && (
+          <div className="flex justify-center py-4">
+            <Loader2 className="h-6 w-6 animate-spin text-blue-500" />
+          </div>
+        )}
+        
+        {/* Load more button */}
+        {hasMore && comments.length > 0 && !isLoading && (
+          <div className="flex justify-center mt-6">
+            <Button 
+              variant="outline" 
+              onClick={loadMoreComments}
+              className="bg-[#1a1a1c] border-[#2a2a30] hover:bg-[#25252c]"
+            >
+              Tải thêm bình luận
+            </Button>
+          </div>
         )}
       </div>
     </div>
